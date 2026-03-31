@@ -86,6 +86,7 @@ const storeGrid = document.getElementById('store-grid');
 const searchRow = document.querySelector('.search-bar-row');
 const filterBar = document.querySelector('.filter-bar');
 const materialFilter = document.getElementById('material-filter');
+const storeMaterialFilter = document.getElementById('store-material-filter');
 
 // Track active tab
 let activeTab = 'materials';
@@ -102,21 +103,37 @@ function parseCSV(csvText) {
         cells.push(idx);
         return cells;
     });
-    // Populate material dropdown from unique materials in the data
-    if (materialFilter) {
-        const seen = new Set();
-        rawDataRows.forEach(row => {
-            const mat = row[0];
-            if (mat && !seen.has(mat)) {
-                seen.add(mat);
-                const label = translations[mat] || mat;
-                const opt = document.createElement('option');
-                opt.value = mat; opt.textContent = label;
-                materialFilter.appendChild(opt);
-            }
+}
+
+function initMaterialFilter() {
+    // Populate both the Params tab dropdown and the Store tab dropdown
+    const dropdowns = [materialFilter, storeMaterialFilter].filter(Boolean);
+    if (dropdowns.length === 0) return;
+
+    const seen = new Set();
+    const materialsFromCSV = [];
+    rawDataRows.forEach(row => {
+        const mat = row[0];
+        if (mat && !seen.has(mat)) {
+            seen.add(mat);
+            materialsFromCSV.push(mat);
+        }
+    });
+
+    dropdowns.forEach(dropdown => {
+        // Clear all except first option
+        while (dropdown.options.length > 1) dropdown.remove(1);
+        materialsFromCSV.forEach(mat => {
+            const label = translations[mat] || mat;
+            const opt = document.createElement('option');
+            opt.value = mat;
+            opt.textContent = label;
+            dropdown.appendChild(opt);
         });
-        materialFilter.addEventListener('change', renderTable);
-    }
+    });
+
+    if (materialFilter) materialFilter.addEventListener('change', renderTable);
+    if (storeMaterialFilter) storeMaterialFilter.addEventListener('change', renderStoreGrid);
 }
 
 function getTranslatedName(nameStr, lang) {
@@ -517,13 +534,17 @@ window.switchTab = function (tabId) {
 function renderStoreGrid() {
     storeGrid.innerHTML = '';
     const query = searchInput.value.toLowerCase().trim();
+    const selectedMat = storeMaterialFilter ? storeMaterialFilter.value : 'All';
     const uniqueMaterials = Object.keys(shoppingData);
 
     let matchedCount = 0;
     uniqueMaterials.forEach(matEn => {
         const matTrans = (currentLang === 'es' && translations[matEn]) ? translations[matEn] : matEn;
 
-        // Search Filter
+        // Material dropdown filter
+        if (selectedMat !== 'All' && matEn !== selectedMat) return;
+
+        // Search filter
         if (query && !matTrans.toLowerCase().includes(query) && !matEn.toLowerCase().includes(query)) {
             return;
         }
@@ -807,5 +828,7 @@ function renderProvidersView() {
 
 // Initialization
 parseCSV(a20ProV2Data);
+initMaterialFilter();
 updateUILabels();
 renderTable();
+
