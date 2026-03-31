@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AtomStack A20 Pro V2 Material Settings</title>
+    <!-- Use Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- SheetJS for Excel export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- MAIN CONTENT (Left side on desktop) -->
+        <div class="main-content-wrapper">
+            <header>
+                <div class="header-content">
+                    <div class="title-area">
+                        <h1>AtomStack A20 Pro V2</h1>
+                        <p class="subtitle" id="subtitle">Configuración de materiales</p>
+                    </div>
+                    <div class="controls">
+                        <button id="lang-toggle-btn" class="btn btn-secondary" aria-label="Toggle Language">
+                            <span class="icon">🌍</span> <span id="lang-label">English</span>
+                        </button>
+                        <button id="export-excel-btn" class="btn btn-primary" aria-label="Export to Excel">
+                            <span class="icon">📊</span> <span id="export-label">Exportar a Excel</span>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <div class="search-bar-row">
+                <input type="text" id="search-input" class="form-control" placeholder="Buscar material...">
+            </div>
+            <div class="filter-bar">
+                <select id="software-filter" class="form-select">
+                    <option value="All">Todos los Software</option>
+                    <option value="LightBurn">LightBurn</option>
+                    <option value="LaserGRBL">LaserGRBL</option>
+                </select>
+                <select id="processing-filter" class="form-select">
+                    <option value="All">Todos los Procesos</option>
+                    <option value="Engraving">Grabado</option>
+                    <option value="Cutting">Corte</option>
+                </select>
+                <select id="sort-controls" class="form-select">
+                    <option value="default">Orden por defecto</option>
+                    <option value="asc">A-Z (Ascendente)</option>
+                    <option value="desc">Z-A (Descendente)</option>
+                </select>
+            </div>
+
+            <main>
+                <div class="table-container">
+                    <table id="material-table" class="markdown-table">
+                        <thead>
+                            <tr id="table-head-row">
+                                <!-- Headers dynamically inserted -->
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Rows dynamically inserted -->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="empty-state" style="display: none;">
+                    <p>No se han encontrado resultados.</p>
+                </div>
+            </main>
+        </div> <!-- End Main Content Wrapper -->
+        
+        <!-- Shopping List Panel (Right side on desktop) -->
+        <aside id="shopping-panel" class="shopping-panel">
+            <div class="shopping-header">
+                <div>
+                    <h2 id="shopping-title">Catálogo</h2>
+                </div>
+                <div class="shopping-header-actions">
+                    <button id="view-cart-btn" class="btn btn-secondary btn-sm" aria-label="Ver Carrito">🛒 <span id="cart-count">0</span></button>
+                    <button id="close-shopping-btn" class="btn-icon mobile-only" aria-label="Close Shopping Panel">&times;</button>
+                </div>
+            </div>
+            
+            <div class="shopping-content" id="providers-container">
+                <div class="empty-shopping">
+                    <span class="icon-large">👈</span>
+                    <p id="shopping-empty-msg">Selecciona una fila de la tabla para ver opciones de compra y grosores específicos.</p>
+                </div>
+            </div>
+
+            <div class="shopping-content" id="cart-container" style="display: none;">
+                <!-- Cart items injected here -->
+            </div>
+        </aside>
+        
+        <!-- Shopping Cart Button (Floating for Mobile) -->
+        <button id="toggle-shopping-btn" class="floating-cart-btn mobile-only" aria-label="Open Shopping List">
+            🛒 <span class="badge" id="floating-cart-badge" style="display: none;">0</span>
+        </button>
+    </div>
+
+    <!-- Include data manually since imports block on file:// protocol without a server -->
+    <script src="data.js"></script>
+    <script src="shopping_data.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
