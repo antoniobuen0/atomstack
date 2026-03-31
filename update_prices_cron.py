@@ -6,8 +6,11 @@ from datetime import datetime
 import time
 import os
 
-JS_FILE = "shopping_data.js"
-OUTPUT_FILE = "shopping_dataset_raw.json"
+# In CI (GitHub Actions), the workflow first exports shopping_data.js -> shopping_data_parsed.json via Node.
+# Locally you can run: node -e "..." first, or this script will try to do it via subprocess.
+INPUT_FILE = "shopping_data_parsed.json"
+OUTPUT_JSON = "shopping_dataset_updated.json"
+OUTPUT_JS = "shopping_data.js"
 
 def extract_laserproject(soup):
     price_tag = soup.select_one('.current-price span, .product-price')
@@ -55,71 +58,64 @@ def scrape_url(url):
 
 def main():
     print(f"[{datetime.now().strftime('%H:%M:%S')}] Iniciando Extracción Masiva de Precios...")
-    
-    # 1. Leer shopping_data.js
-    if not os.path.exists(JS_FILE):
-        print(f"No se encuentra {JS_FILE}")
+
+    # 1. Leer el JSON pre-exportado por Node.js (shopping_data_parsed.json)
+    if not os.path.exists(INPUT_FILE):
+        print(f"❌ No se encuentra {INPUT_FILE}. Ejecuta primero el paso de exportación Node.js.")
         return
-        
-    with open(JS_FILE, 'r', encoding='utf-8') as f:
-        js_content = f.read()
-        
-    # Extraer el objeto {...}
-    match = re.search(r'const shoppingData = ({.*});?', js_content, re.DOTALL)
-    if not match:
-        print("No se encontró 'const shoppingData = {' en el fichero.")
-        return
-        
-    raw_json = match.group(1)
-    
-    # Sanear las claves no entrecomilladas (ej: provider: -> "provider":) y quitar comentarios JS
-    # Eliminamos comentarios de linea plana
-    raw_json = re.sub(r'//.*', '', raw_json)
-    # Entrecomillamos las keys
-    raw_json = re.sub(r'(?m)^\s*([a-zA-Z0-9_]+)\s*:', r'"\1":', raw_json)
-    
-    try:
-        data = json.loads(raw_json)
-    except json.JSONDecodeError as e:
-        print(f"Error parseando JSON (necesitas limpiar manual shopping_data.js si hay sintaxis extraña): {e}")
-        return
+
+    with open(INPUT_FILE, 'r', encoding='utf-8') as f:
+        data = json.load(f)
+
+    print(f"✅ Cargados {len(data)} materiales desde {INPUT_FILE}")
 
     # 2. Recorrer datos y raspar precios
+    updated = skipped = kept = 0
+    SKIP_DOMAINS = ['amazon.es', 'leroymerlin.es', 'carrefour.es', 'ikea.com',
+                    'bauhaus.es', 'cncbarato.com', 'rotulos24.com', 'barnaart.com',
+                    'tejidospulido.com', 'regalopublicidad.com', 'minerapolo.com', 'prosl.es']
+
     for material, products in data.items():
-        print(f"\n📦 Material: {material}")
+        print(f"\n📦 {material}")
         for p in products:
-            old_price = p.get('price')
             url = p.get('url', '')
-            if not url or url.startswith('http') is False:
+            if not url or not url.startswith('http'):
                 continue
-                
+
+            if any(skip in url for skip in SKIP_DOMAINS):
+                print(f"  ⏭  {p['provider']} — protegido, manteniendo {p.get('price')} €")
+                p['query_date'] = datetime.now().strftime("%Y-%m-%d")
+                skipped += 1
+                continue
+
             new_price = scrape_url(url)
-            
+            old_price = p.get('price')
+
             if new_price is not None and new_price > 0:
-                print(f"  -> Precio actualizado: {old_price} € --> {new_price} €")
+                print(f"  ✅ {p['provider']}: {old_price} → {new_price} €")
                 p['price'] = new_price
                 p['priceStr'] = f"{str(new_price).replace('.', ',')} €"
+                updated += 1
             else:
-                print(f"  -> Manteniendo precio actual: {old_price} €")
-            
+                print(f"  ⚠️  {p['provider']}: sin detección, manteniendo {old_price} €")
+                kept += 1
+
             p['query_date'] = datetime.now().strftime("%Y-%m-%d")
-            time.sleep(1) # Pequeño delay cortesia
-            
-    # 3. Guardar el resultado en .json para su uso o volcarlos tal cual.
-    print(f"\n💾 Guardando resultados como JSON crudo en {OUTPUT_FILE}...")
-    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+            time.sleep(1.5)
+
+    # 3. Guardar JSON de resultados
+    print(f"\n💾 Guardando {OUTPUT_JSON}...")
+    with open(OUTPUT_JSON, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=4, ensure_ascii=False)
-        
-    # Extra: Volcar también de regreso al JS
-    print("🔁 Escribiendo también de vuelta a shopping_data.js (sobreescribiendo)...")
+
+    # 4. Volcar de vuelta a shopping_data.js (keys sin comillas para JS estándar)
+    print(f"🔁 Actualizando {OUTPUT_JS}...")
     js_output = f"const shoppingData = {json.dumps(data, indent=4, ensure_ascii=False)};\n"
-    # Quitamos comillas a las keys principales para que se parezca al código JS estandar
     js_output = re.sub(r'"([a-zA-Z_]\w*)":', r'\1:', js_output)
-    
-    with open(JS_FILE, "w", encoding="utf-8") as f:
+    with open(OUTPUT_JS, "w", encoding="utf-8") as f:
         f.write(js_output)
 
-    print("✅ ¡Terminado exitosamente! Tu web tiene el dataset más fresco posible.")
+    print(f"\n✅ DONE — Actualizados: {updated} | Omitidos: {skipped} | Sin cambio: {kept}")
 
 if __name__ == '__main__':
     main()

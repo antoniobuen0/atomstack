@@ -85,6 +85,10 @@ const productsView = document.getElementById('products-view');
 const storeGrid = document.getElementById('store-grid');
 const searchRow = document.querySelector('.search-bar-row');
 const filterBar = document.querySelector('.filter-bar');
+const materialFilter = document.getElementById('material-filter');
+
+// Track active tab
+let activeTab = 'materials';
 
 let cart = [];
 let currentPanelView = 'catalog'; // 'catalog' | 'cart'
@@ -93,12 +97,26 @@ let currentActiveMaterial = null;
 function parseCSV(csvText) {
     const lines = csvText.trim().split('\n');
     headers = lines[0].split(',').map(h => h.trim());
-    // Store original index for default sorting
     rawDataRows = lines.slice(1).map((line, idx) => {
         let cells = line.split(',').map(cell => cell.trim());
-        cells.push(idx); // Append original index at the end
+        cells.push(idx);
         return cells;
     });
+    // Populate material dropdown from unique materials in the data
+    if (materialFilter) {
+        const seen = new Set();
+        rawDataRows.forEach(row => {
+            const mat = row[0];
+            if (mat && !seen.has(mat)) {
+                seen.add(mat);
+                const label = translations[mat] || mat;
+                const opt = document.createElement('option');
+                opt.value = mat; opt.textContent = label;
+                materialFilter.appendChild(opt);
+            }
+        });
+        materialFilter.addEventListener('change', renderTable);
+    }
 }
 
 function getTranslatedName(nameStr, lang) {
@@ -140,12 +158,14 @@ function renderTable() {
     let filteredRows = mappedRows.filter(data => {
         const sw = data.originalRow[1];
         const proc = data.originalRow[4];
+        const matFilterVal = materialFilter ? materialFilter.value : 'All';
 
         const matchesSearch = data.materialEn.toLowerCase().includes(searchTerm) || data.materialEs.toLowerCase().includes(searchTerm);
         const matchesSoftware = (sfFilter === 'All') || (sw === sfFilter);
         const matchesProcessing = (procFilter === 'All') || (proc === procFilter);
+        const matchesMaterial = (matFilterVal === 'All') || (data.materialEn === matFilterVal);
 
-        return matchesSearch && matchesSoftware && matchesProcessing;
+        return matchesSearch && matchesSoftware && matchesProcessing && matchesMaterial;
     });
 
     // Sorting
@@ -218,13 +238,11 @@ function updateUILabels() {
     }
 }
 
-// Event Listeners
+// Universal search: dispatches to whichever tab is active
 searchInput.addEventListener('input', () => {
-    if (productsView.style.display === 'block') {
-        renderStoreGrid();
-    } else {
-        renderTable();
-    }
+    if (activeTab === 'products') renderStoreGrid();
+    else if (activeTab === 'providers') renderProvidersView();
+    else renderTable();
 });
 softwareFilter.addEventListener('change', renderTable);
 processingFilter.addEventListener('change', renderTable);
@@ -232,6 +250,7 @@ sortControls.addEventListener('change', (e) => {
     currentSort = e.target.value;
     renderTable();
 });
+
 
 langToggleBtn.addEventListener('click', () => {
     currentLang = currentLang === 'en' ? 'es' : 'en';
@@ -466,6 +485,7 @@ headerCartBtn.addEventListener('click', () => {
 
 // Tab Logic
 window.switchTab = function (tabId) {
+    activeTab = tabId;
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tab-${tabId}`).classList.add('active');
 
@@ -683,10 +703,10 @@ function renderProvidersView() {
     const matFilter = document.getElementById('provider-material-filter');
     const query = searchInput.value.toLowerCase().trim();
     const selectedMat = matFilter ? matFilter.value : 'All';
-    
-    // Populate filter dropdown once
+
+    // Populate filter dropdown once from shoppingData keys (real data only)
     if (matFilter && matFilter.options.length === 1) {
-        const allMaterials = [...new Set(providerDirectory.flatMap(p => p.materials))].sort();
+        const allMaterials = Object.keys(shoppingData).sort();
         allMaterials.forEach(mat => {
             const label = (currentLang === 'es' && translations[mat]) ? translations[mat] : mat;
             const opt = document.createElement('option');
@@ -695,35 +715,74 @@ function renderProvidersView() {
         });
         matFilter.addEventListener('change', renderProvidersView);
     }
-    
+
     grid.innerHTML = '';
     let count = 0;
-    
+
     providerDirectory.forEach(prov => {
+        // Only show materials this provider actually has entries for in shoppingData
+        const realMaterials = prov.materials.filter(mat =>
+            shoppingData[mat] && shoppingData[mat].some(p =>
+                p.provider === prov.name ||
+                p.provider.toLowerCase().includes(prov.name.split(' ')[0].toLowerCase())
+            )
+        );
+
+        // For chip display: use realMaterials list (coherent with shoppingData)
+        // But if no real entries, fall back to declared materials for info purposes
+        const chipsSource = realMaterials.length > 0 ? realMaterials : prov.materials;
+
+        // Apply material filter — check against declared materials list for routing
+        if (selectedMat !== 'All' && !prov.materials.includes(selectedMat)) return;
+
         // Apply search filter
-        if (query && !prov.name.toLowerCase().includes(query) && 
+        if (query && !prov.name.toLowerCase().includes(query) &&
             !prov.materials.some(m => {
                 const label = translations[m] || m;
                 return label.toLowerCase().includes(query) || m.toLowerCase().includes(query);
             })) return;
-        
-        // Apply material filter
-        if (selectedMat !== 'All' && !prov.materials.includes(selectedMat)) return;
-        
+
         count++;
         const card = document.createElement('div');
         card.className = 'provider-card';
-        
-        const chipsHtml = prov.materials.map(mat => {
+
+        const chipsHtml = chipsSource.map(mat => {
             const label = (currentLang === 'es' && translations[mat]) ? translations[mat] : mat;
-            return `<span class="material-chip" onclick="switchTab('products'); setTimeout(() => { searchInput.value='${label}'; renderStoreGrid(); }, 50)">${label}</span>`;
+            // Chip navigates to Tienda and filters by material name
+            return `<span class="material-chip" onclick="switchTab('products'); setTimeout(() => { searchInput.value='${label}'; renderStoreGrid(); }, 80)">${label}</span>`;
         }).join('');
-        
+
         const shippingHtml = `
-            ${prov.freeShipping ? `<span>🚚 Gratis &ge;${prov.freeShipping}€</span>` : '<span>🚚 Consultar</span>'}
+            ${prov.freeShipping ? `<span>🚚 Gratis &ge;${prov.freeShipping}&euro;</span>` : '<span>🚚 Consultar</span>'}
             ${prov.shippingCost ? `<span>💰 ${prov.shippingCost}</span>` : ''}
         `;
-        
+
+        // If a material is selected, show inline product rows from shoppingData for this provider
+        let productRowsHtml = '';
+        if (selectedMat !== 'All' && shoppingData[selectedMat]) {
+            const matchingProducts = shoppingData[selectedMat].filter(p =>
+                p.provider === prov.name ||
+                p.provider.toLowerCase().includes(prov.name.split(' ')[0].toLowerCase())
+            );
+            if (matchingProducts.length > 0) {
+                const matLabel = (currentLang === 'es' && translations[selectedMat]) ? translations[selectedMat] : selectedMat;
+                productRowsHtml = `
+                <div class="provider-products-section">
+                    <div class="provider-materials-label" style="margin-top:12px;">${matLabel} — Productos disponibles</div>
+                    ${matchingProducts.map(p => `
+                    <div class="provider-product-row">
+                        <div class="provider-product-name">${p.name}</div>
+                        <div class="provider-product-meta">
+                            <strong>${p.priceStr || '—'}</strong>
+                            ${p.specs ? `<span>${p.specs}</span>` : ''}
+                            ${p.free_shipping_min ? `<span>🚚 Gratis &ge;${p.free_shipping_min}&euro;</span>` : ''}
+                        </div>
+                        <a href="${p.url}" target="_blank" class="provider-link" style="font-size:11px;">Ver producto →</a>
+                    </div>`).join('')}
+                </div>`;
+            }
+        }
+
         card.innerHTML = `
             <div class="provider-card-header">
                 <div class="provider-name">${prov.name}</div>
@@ -732,6 +791,7 @@ function renderProvidersView() {
             <div class="provider-shipping-info">${shippingHtml}</div>
             <div class="provider-materials-label">Materiales disponibles</div>
             <div class="provider-materials-chips">${chipsHtml}</div>
+            ${productRowsHtml}
             <div class="provider-card-footer">
                 <span class="provider-vat-note">📋 ${prov.vatNote}</span>
                 <a href="${prov.url}" target="_blank" class="provider-link">Visitar →</a>
@@ -739,7 +799,7 @@ function renderProvidersView() {
         `;
         grid.appendChild(card);
     });
-    
+
     if (count === 0) {
         grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><p>Ningún proveedor coincide con tu búsqueda.</p></div>`;
     }

@@ -42,6 +42,7 @@
                     <button class="tab-btn active" id="tab-materials" onclick="switchTab('materials')">🎛️ Parámetros Láser</button>
                     <button class="tab-btn" id="tab-products" onclick="switchTab('products')">📦 Tienda Insumos</button>
                     <button class="tab-btn" id="tab-providers" onclick="switchTab('providers')">🏪 Proveedores</button>
+                </div>
             </header>
 
             <div class="search-bar-row">
@@ -57,6 +58,9 @@
                     <option value="All">Todos los Procesos</option>
                     <option value="Engraving">Grabado</option>
                     <option value="Cutting">Corte</option>
+                </select>
+                <select id="material-filter" class="form-select">
+                    <option value="All">Todos los Materiales</option>
                 </select>
                 <select id="sort-controls" class="form-select">
                     <option value="default">Orden por defecto</option>
