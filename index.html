@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AtomStack A20 Pro V2 Material Settings</title>
     <!-- Use Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <!-- SheetJS for Excel export -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
+
 <body>
     <div class="app-container">
         <!-- MAIN CONTENT (Left side on desktop) -->
@@ -21,14 +25,23 @@
                         <p class="subtitle" id="subtitle">Configuración de materiales</p>
                     </div>
                     <div class="controls">
-                        <button id="lang-toggle-btn" class="btn btn-secondary" aria-label="Toggle Language">
-                            <span class="icon">🌍</span> <span id="lang-label">English</span>
+                        <button id="header-cart-btn" class="btn btn-primary" aria-label="Ver Carrito">
+                            🛒 <span id="header-cart-count">0</span> | <span id="header-cart-total">0.00 €</span>
                         </button>
-                        <button id="export-excel-btn" class="btn btn-primary" aria-label="Export to Excel">
-                            <span class="icon">📊</span> <span id="export-label">Exportar a Excel</span>
+                        <button id="export-excel-btn" class="btn btn-secondary mobile-hidden" aria-label="Exportar">
+                            <span class="icon">📊</span> <span id="export-label" style="display:none;">Exportar</span>
+                        </button>
+                        <button id="lang-toggle-btn" class="btn btn-secondary mobile-hidden"
+                            aria-label="Toggle Language">
+                            <span class="icon">🌍</span> <span id="lang-label">English</span>
                         </button>
                     </div>
                 </div>
+
+                <div class="nav-tabs">
+                    <button class="tab-btn active" id="tab-materials" onclick="switchTab('materials')">🎛️ Parámetros Láser</button>
+                    <button class="tab-btn" id="tab-products" onclick="switchTab('products')">📦 Tienda Insumos</button>
+                    <button class="tab-btn" id="tab-providers" onclick="switchTab('providers')">🏪 Proveedores</button>
             </header>
 
             <div class="search-bar-row">
@@ -53,24 +66,46 @@
             </div>
 
             <main>
-                <div class="table-container">
-                    <table id="material-table" class="markdown-table">
-                        <thead>
-                            <tr id="table-head-row">
-                                <!-- Headers dynamically inserted -->
-                            </tr>
-                        </thead>
-                        <tbody id="table-body">
-                            <!-- Rows dynamically inserted -->
-                        </tbody>
-                    </table>
+                <!-- Materials Mode -->
+                <div id="materials-view">
+                    <div class="table-container">
+                        <table id="material-table" class="markdown-table">
+                            <thead>
+                                <tr id="table-head-row">
+                                    <!-- Headers dynamically inserted -->
+                                </tr>
+                            </thead>
+                            <tbody id="table-body">
+                                <!-- Rows dynamically inserted -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="empty-state" id="empty-state" style="display: none;">
+                        <p>No se han encontrado resultados.</p>
+                    </div>
                 </div>
-                <div class="empty-state" id="empty-state" style="display: none;">
-                    <p>No se han encontrado resultados.</p>
+
+                <!-- Products Store Mode -->
+                <div id="products-view" style="display: none; padding: 32px;">
+                    <div class="store-grid" id="store-grid">
+                        <!-- Product cards dynamically inserted -->
+                    </div>
+                </div>
+
+                <!-- Providers View -->
+                <div id="providers-view" style="display: none; padding: 32px;">
+                    <div class="provider-filter-bar">
+                        <select id="provider-material-filter" class="form-select" style="max-width:280px;">
+                            <option value="All">Todos los Materiales</option>
+                        </select>
+                    </div>
+                    <div class="providers-grid" id="providers-grid">
+                        <!-- Provider cards dynamically inserted -->
+                    </div>
                 </div>
             </main>
         </div> <!-- End Main Content Wrapper -->
-        
+
         <!-- Shopping List Panel (Right side on desktop) -->
         <aside id="shopping-panel" class="shopping-panel">
             <div class="shopping-header">
@@ -78,15 +113,18 @@
                     <h2 id="shopping-title">Catálogo</h2>
                 </div>
                 <div class="shopping-header-actions">
-                    <button id="view-cart-btn" class="btn btn-secondary btn-sm" aria-label="Ver Carrito">🛒 <span id="cart-count">0</span></button>
-                    <button id="close-shopping-btn" class="btn-icon mobile-only" aria-label="Close Shopping Panel">&times;</button>
+                    <button id="view-cart-btn" class="btn btn-secondary btn-sm" aria-label="Ver Carrito">🛒 <span
+                            id="cart-count">0</span></button>
+                    <button id="close-shopping-btn" class="btn-icon mobile-only"
+                        aria-label="Close Shopping Panel">&times;</button>
                 </div>
             </div>
-            
+
             <div class="shopping-content" id="providers-container">
                 <div class="empty-shopping">
                     <span class="icon-large">👈</span>
-                    <p id="shopping-empty-msg">Selecciona una fila de la tabla para ver opciones de compra y grosores específicos.</p>
+                    <p id="shopping-empty-msg">Selecciona una fila de la tabla para ver opciones de compra y grosores
+                        específicos.</p>
                 </div>
             </div>
 
@@ -94,11 +132,15 @@
                 <!-- Cart items injected here -->
             </div>
         </aside>
-        
+
         <!-- Shopping Cart Button (Floating for Mobile) -->
-        <button id="toggle-shopping-btn" class="floating-cart-btn mobile-only" aria-label="Open Shopping List">
+        <button id="toggle-shopping-btn" class="floating-cart-btn mobile-only" aria-label="Open Shopping List"
+            style="display:none;">
             🛒 <span class="badge" id="floating-cart-badge" style="display: none;">0</span>
         </button>
+
+        <!-- Overlay -->
+        <div id="panel-overlay" class="panel-overlay"></div>
     </div>
 
     <!-- Include data manually since imports block on file:// protocol without a server -->
@@ -106,4 +148,5 @@
     <script src="shopping_data.js"></script>
     <script src="script.js"></script>
 </body>
+
 </html>

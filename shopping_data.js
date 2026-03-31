@@ -37,6 +37,18 @@ const shoppingData = {
             query_date: "2026-03-31",
             shipping_cost: 0.00,
             free_shipping_min: 29.00
+        },
+        {
+            provider: "Esteba",
+            name: "Tablero alistonado monocapa Paulownia 2400x1200x13mm",
+            url: "https://www.esteba.com/es/tableros-alistonados-paulownia",
+            price: 70.02,
+            priceStr: "70,02 € / tablero",
+            vat_included: true,
+            specs: "Alistonado paulownia, 2400x1200x13mm",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: null
         }
     ],
     "Cork Wood": [
@@ -49,7 +61,7 @@ const shoppingData = {
             vat_included: true,
             specs: "2mm, 5x0.5m",
             query_date: "2026-03-31",
-            shipping_cost: 3.95,
+            shipping_cost: null,
             free_shipping_min: null
         },
         {
@@ -59,10 +71,22 @@ const shoppingData = {
             price: 4.50,
             priceStr: "4,50 €",
             vat_included: true,
-            specs: "300x600mm",
+            specs: "300x600mm, corcho optimizado para láser CO2",
             query_date: "2026-03-31",
-            shipping_cost: 5.95,
-            free_shipping_min: 75.00
+            shipping_cost: null,
+            free_shipping_min: null
+        },
+        {
+            provider: "Corcho24",
+            name: "Tablero de corcho dedicado al corte y grabado láser 3x305x610mm",
+            url: "https://corcho24.es/tienda/210-corcho-natural-para-corte-y-grabado-laacuteser/2191-tablero-de-corcho-dedicado-al-corte-y-grabado-3x305x610mm.html",
+            price: 7.59,
+            priceStr: "≈7,59 € / ud (comprando 5)",
+            vat_included: true,
+            specs: "3mm, 305x610mm, corcho específico para láser CO2",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: null
         }
     ],
     "Yellow Peach Wood": [
@@ -82,15 +106,27 @@ const shoppingData = {
     "Bamboo": [
         {
             provider: "Brildor",
-            name: "Artículos de Bambú para personalización",
-            url: "https://www.brildor.com/es/grabado-laser/articulos-personalizables.html",
+            name: "Tablas de corte de bambú grabables láser",
+            url: "https://www.brildor.com/es/tablas-cortar-bambu-grabado",
             price: 2.15,
-            priceStr: "2,15 € / unidad",
+            priceStr: "≈2,15 € / unidad",
             vat_included: true,
-            specs: "Tablas cortadas de bambú grabado",
+            specs: "Tablas de bambú 10mm, varias medidas, aptas grabado láser",
             query_date: "2026-03-31",
-            shipping_cost: 4.90,
-            free_shipping_min: 60.00
+            shipping_cost: null,
+            free_shipping_min: 50.00
+        },
+        {
+            provider: "RegaloPubliciad / similar B2B",
+            name: "Tabla de cortar de bambú personalizable por láser",
+            url: "https://www.regalopublicidad.com/hogar/articulos-cocina-personalizados/tablas-cortar/tabla-cortar-bambu-personalizable-laser",
+            price: 15.00,
+            priceStr: "Contactar para lote",
+            vat_included: true,
+            specs: "Tabla bambú 20,7x14,7cm, personalizable por grabado láser",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: null
         }
     ],
     "Acrylic": [
@@ -141,10 +177,22 @@ const shoppingData = {
             price: 8.50,
             priceStr: "8,50 €",
             vat_included: true,
-            specs: "Pack 50 hojas",
+            specs: "Pack 50 hojas A3, 300 g",
             query_date: "2026-03-31",
-            shipping_cost: 4.50,
-            free_shipping_min: 49.00
+            shipping_cost: null,
+            free_shipping_min: null
+        },
+        {
+            provider: "Amazon España",
+            name: "Cartulina Kraft A4 300g",
+            url: "https://www.amazon.es/s?k=cartulina+kraft+300g",
+            price: 10.00,
+            priceStr: "≈10,00 €",
+            vat_included: true,
+            specs: "Pack 50–100 hojas A4, ~300 g/m²",
+            query_date: "2026-03-31",
+            shipping_cost: 0.00,
+            free_shipping_min: 29.00
         }
     ],
     "Office Paper": [
@@ -155,10 +203,22 @@ const shoppingData = {
             price: 5.50,
             priceStr: "5,50 €",
             vat_included: true,
-            specs: "500 hojas",
+            specs: "500 hojas A4 80 g/m²",
             query_date: "2026-03-31",
             shipping_cost: 0.00,
             free_shipping_min: 29.00
+        },
+        {
+            provider: "Carrefour Online",
+            name: "Papel A4 80g marca blanca",
+            url: "https://www.carrefour.es/?q=papel+a4+80g",
+            price: 4.50,
+            priceStr: "≈4,50 €",
+            vat_included: true,
+            specs: "500 hojas A4 80 g/m²",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: null
         }
     ],
     "Oil Painting Paper": [
@@ -353,7 +413,7 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, 60x120cm",
             query_date: "2026-03-31",
-            shipping_cost: 15.00,
+            shipping_cost: null,
             free_shipping_min: null
         },
         {
@@ -363,10 +423,22 @@ const shoppingData = {
             price: 12.50,
             priceStr: "12,50 €",
             vat_included: true,
-            specs: "A4, Láser friendly",
+            specs: "A4, pack 10, compatible corte láser",
             query_date: "2026-03-31",
             shipping_cost: 0.00,
             free_shipping_min: 29.00
+        },
+        {
+            provider: "Laser Project",
+            name: "DM rechapado específico láser",
+            url: "https://www.laserproject.es/tienda/",
+            price: 15.00,
+            priceStr: "Variable por formato",
+            vat_included: true,
+            specs: "DM/DM rechapado en varios formatos, optimizado para láser",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: null
         }
     ],
     "Galvanized Iron": [
@@ -427,16 +499,28 @@ const shoppingData = {
     ],
     "PCB Board": [
         {
-            provider: "Electrocomponentes",
-            name: "Placa Cobre Virgen FR4 Fibra Vidrio",
+            provider: "Electan / Electrocomponentes",
+            name: "Placa cobre virgen FR4 fibra de vidrio",
             url: "https://www.electan.com/placas-cobre-virgen-c-315.html",
             price: 3.50,
             priceStr: "3,50 €",
             vat_included: true,
-            specs: "100x160mm, 1 cara o 2 caras",
+            specs: "100x160mm, 1 o 2 caras",
             query_date: "2026-03-31",
-            shipping_cost: 4.95,
-            free_shipping_min: 75.00
+            shipping_cost: null,
+            free_shipping_min: null
+        },
+        {
+            provider: "Amazon España",
+            name: "Pack placas PCB FR4 100x70mm",
+            url: "https://www.amazon.es/s?k=placa+pcb+fr4+100x70",
+            price: 8.00,
+            priceStr: "≈8,00 € / pack",
+            vat_included: true,
+            specs: "Varios tamaños, FR4 cobreado",
+            query_date: "2026-03-31",
+            shipping_cost: 0.00,
+            free_shipping_min: 29.00
         }
     ],
     "High Density Foam Board": [
@@ -447,10 +531,22 @@ const shoppingData = {
             price: 19.95,
             priceStr: "19,95 €",
             vat_included: true,
-            specs: "5mm, Pack 10 u., Formato A3",
+            specs: "5mm, pack 10 hojas A3",
             query_date: "2026-03-31",
             shipping_cost: 0.00,
             free_shipping_min: 29.00
+        },
+        {
+            provider: "SelfPaper",
+            name: "Cartón pluma blanco/negro 5mm",
+            url: "https://www.selfpaper.com/carton-pluma",
+            price: 4.00,
+            priceStr: "≈4,00 € / hoja grande",
+            vat_included: true,
+            specs: "Planchas varias medidas, 5mm",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: null
         }
     ],
     "Two Color Plate": [
@@ -470,15 +566,27 @@ const shoppingData = {
     "Resin": [
         {
             provider: "Feroca",
-            name: "Resina Epoxi Transparente (Bloques)",
+            name: "Resina Epoxi Transparente (bloques, coladas gruesas)",
             url: "https://www.feroca.com/es/",
             price: 26.00,
             priceStr: "26,00 €",
             vat_included: true,
-            specs: "1 Kg, para moldes previos al grabado",
+            specs: "Kit ~1kg para encapsulados y piezas macizas",
             query_date: "2026-03-31",
-            shipping_cost: 5.00,
+            shipping_cost: null,
             free_shipping_min: 100.00
+        },
+        {
+            provider: "Amazon España",
+            name: "Resina epoxi transparente para manualidades",
+            url: "https://www.amazon.es/s?k=resina+epoxi+transparente+1kg",
+            price: 20.00,
+            priceStr: "≈20,00 €",
+            vat_included: true,
+            specs: "Kits 1kg para coladas, varias marcas",
+            query_date: "2026-03-31",
+            shipping_cost: 0.00,
+            free_shipping_min: 29.00
         }
     ],
     "Artificial Beef Bone": [
@@ -498,15 +606,27 @@ const shoppingData = {
     "Rubber": [
         {
             provider: "Laser Project",
-            name: "Goma Láser para Sellos Sin Olor",
+            name: "Goma láser para sellos sin olor",
             url: "https://www.laserproject.es/es/materiales-laser/caucho",
             price: 14.50,
             priceStr: "14,50 €",
             vat_included: true,
-            specs: "Tamaño A4, 2.3mm Espesor",
+            specs: "Hoja tamaño A4, 2.3mm espesor",
             query_date: "2026-03-31",
-            shipping_cost: 5.95,
-            free_shipping_min: 75.00
+            shipping_cost: null,
+            free_shipping_min: null
+        },
+        {
+            provider: "Brildor",
+            name: "Goma láser para sellos",
+            url: "https://www.brildor.com/es/goma-laser-sellos",
+            price: 10.00,
+            priceStr: "≈10,00 € / hoja",
+            vat_included: true,
+            specs: "Hojas para grabado láser, varios formatos",
+            query_date: "2026-03-31",
+            shipping_cost: null,
+            free_shipping_min: 50.00
         }
     ],
     "Iron Sheet": [
