@@ -1,0 +1,37 @@
+name: 🔄 Actualizar Precios de Materiales
+
+on:
+  schedule:
+    - cron: '0 7 * * *'
+  workflow_dispatch:
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests beautifulsoup4
+      - name: Exportar JS a JSON
+        run: |
+          node -e "
+          const fs=require('fs');
+          let s=fs.readFileSync('shopping_data.js','utf8');
+          s=s.replace('const shoppingData','global.shoppingData');
+          eval(s);
+          fs.writeFileSync('shopping_data_parsed.json',JSON.stringify(global.shoppingData,null,2));
+          "
+      - run: python update_prices_cron.py
+      - name: Commit cambios
+        run: |
+          git config user.email "actions@github.com"
+          git config user.name "github-actions[bot]"
+          git add shopping_data.js shopping_dataset_updated.json
+          git diff --staged --quiet || git commit -m "🤖 Auto-update precios [$(date +'%Y-%m-%d')]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
