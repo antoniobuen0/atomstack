@@ -1,5 +1,5 @@
 const shoppingData = {
-    "Basswood": [
+    Basswood: [
         {
             provider: "Amazon España",
             name: "Placas de madera de tilo 3mm (Pila de 10) 300x200mm",
@@ -9,20 +9,20 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, Pack 10 u., 30x20cm",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         },
         {
             provider: "CNC Barato / Maturas",
             name: "Panel contrachapado de Tilo 3mm",
             url: "https://www.cncbarato.com/search?q=tilo",
-            price: 4.50,
+            price: 4.5,
             priceStr: "4,50 € / placa",
             vat_included: true,
             specs: "3mm, Formato A3",
             query_date: "2026-03-31",
             shipping_cost: 4.95,
-            free_shipping_min: 50.00
+            free_shipping_min: 50
         }
     ],
     "Paulownia Wood": [
@@ -30,13 +30,13 @@ const shoppingData = {
             provider: "Amazon España",
             name: "Láminas Madera de Paulownia 2mm",
             url: "https://www.amazon.es/s?k=madera+paulownia+laser",
-            price: 15.50,
+            price: 15.5,
             priceStr: "15,50 €",
             vat_included: true,
             specs: "2mm, Pack 5 u.",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         },
         {
             provider: "Esteba",
@@ -68,7 +68,7 @@ const shoppingData = {
             provider: "Laser Project",
             name: "Plancha Corcho Láser 3mm",
             url: "https://www.laserproject.es/es/21-madera",
-            price: 4.50,
+            price: 4.5,
             priceStr: "4,50 €",
             vat_included: true,
             specs: "300x600mm, corcho optimizado para láser CO2",
@@ -99,11 +99,11 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 20 rodajas naturales",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
-    "Bamboo": [
+    Bamboo: [
         {
             provider: "Brildor",
             name: "Tablas de corte de bambú grabables láser",
@@ -114,13 +114,13 @@ const shoppingData = {
             specs: "Tablas de bambú 10mm, varias medidas, aptas grabado láser",
             query_date: "2026-03-31",
             shipping_cost: null,
-            free_shipping_min: 50.00
+            free_shipping_min: 50
         },
         {
             provider: "RegaloPubliciad / similar B2B",
             name: "Tabla de cortar de bambú personalizable por láser",
             url: "https://www.regalopublicidad.com/hogar/articulos-cocina-personalizados/tablas-cortar/tabla-cortar-bambu-personalizable-laser",
-            price: 15.00,
+            price: 15,
             priceStr: "Contactar para lote",
             vat_included: true,
             specs: "Tabla bambú 20,7x14,7cm, personalizable por grabado láser",
@@ -129,7 +129,7 @@ const shoppingData = {
             free_shipping_min: null
         }
     ],
-    "Acrylic": [
+    Acrylic: [
         {
             provider: "Laser Project",
             name: "Acrílico de colada transparente 3mm (60x40cm)",
@@ -140,18 +140,18 @@ const shoppingData = {
             specs: "3mm, Acrílico colada garantizado láser, 60x40cm",
             query_date: "2026-03-31",
             shipping_cost: 5.95,
-            free_shipping_min: 75.00
+            free_shipping_min: 75
         },
         {
             provider: "Rotulos24",
             name: "Metacrilato a medida 3mm Negro OPACO Cast",
             url: "https://www.rotulos24.com/placas-metacrilato-a-medida",
-            price: 35.00,
+            price: 35,
             priceStr: "35,00 € / m²",
             vat_included: true,
             specs: "3mm, Colada, Precio por metro cuadrado",
             query_date: "2026-03-31",
-            shipping_cost: 6.00,
+            shipping_cost: 6,
             free_shipping_min: null
         }
     ],
@@ -160,12 +160,12 @@ const shoppingData = {
             provider: "Leroy Merlin",
             name: "Azulejo blanco brillo 15x15 cm",
             url: "https://www.leroymerlin.es/productos/ceramica/revestimiento-de-pared/",
-            price: 0.50,
+            price: 0.5,
             priceStr: "0,50 € / ud",
             vat_included: true,
             specs: "Cerámica estándar para esmaltado láser",
             query_date: "2026-03-31",
-            shipping_cost: 15.00,
+            shipping_cost: 15,
             free_shipping_min: null
         }
     ],
@@ -174,7 +174,7 @@ const shoppingData = {
             provider: "SelfPaper",
             name: "Cartulina Kraft 300g (A3)",
             url: "https://www.selfpaper.com/papel-kraft",
-            price: 8.50,
+            price: 8.5,
             priceStr: "8,50 €",
             vat_included: true,
             specs: "Pack 50 hojas A3, 300 g",
@@ -186,13 +186,13 @@ const shoppingData = {
             provider: "Amazon España",
             name: "Cartulina Kraft A4 300g",
             url: "https://www.amazon.es/s?k=cartulina+kraft+300g",
-            price: 10.00,
+            price: 10,
             priceStr: "≈10,00 €",
             vat_included: true,
             specs: "Pack 50–100 hojas A4, ~300 g/m²",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
     "Office Paper": [
@@ -200,19 +200,19 @@ const shoppingData = {
             provider: "Amazon España",
             name: "Papel DIN A4 80g Navigator",
             url: "https://www.amazon.es/s?k=papel+din+a4+80g",
-            price: 5.50,
+            price: 5.5,
             priceStr: "5,50 €",
             vat_included: true,
             specs: "500 hojas A4 80 g/m²",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         },
         {
             provider: "Carrefour Online",
             name: "Papel A4 80g marca blanca",
             url: "https://www.carrefour.es/?q=papel+a4+80g",
-            price: 4.50,
+            price: 4.5,
             priceStr: "≈4,50 €",
             vat_included: true,
             specs: "500 hojas A4 80 g/m²",
@@ -226,16 +226,16 @@ const shoppingData = {
             provider: "Barna Art",
             name: "Papel para óleo y acrílico Figueras 290g",
             url: "https://www.barnaart.com/papel-oleo",
-            price: 11.20,
+            price: 11.2,
             priceStr: "11,20 €",
             vat_included: true,
             specs: "Bloc 24x33cm 10 hojas",
             query_date: "2026-03-31",
-            shipping_cost: 4.90,
-            free_shipping_min: 50.00
+            shipping_cost: 4.9,
+            free_shipping_min: 50
         }
     ],
-    "Mirrors": [
+    Mirrors: [
         {
             provider: "IKEA",
             name: "LOTS Espejo 30x30 cm",
@@ -245,22 +245,22 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack de 4, vidrio con reverso apto para láser",
             query_date: "2026-03-31",
-            shipping_cost: 4.00,
+            shipping_cost: 4,
             free_shipping_min: null
         }
     ],
-    "Leather": [
+    Leather: [
         {
             provider: "Amazon España",
             name: "Retales de cuero vacuno curtido vegetal 2mm",
             url: "https://www.amazon.es/s?k=cuero+vegetal+grabar+laser",
-            price: 24.50,
+            price: 24.5,
             priceStr: "24,50 €",
             vat_included: true,
             specs: "Aprox 1 kg, curtido sin cromo (seguro láser)",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
     "Stainless Steel Sheet": [
@@ -268,13 +268,13 @@ const shoppingData = {
             provider: "Laser Project",
             name: "Lámina acero inoxidable aditivada láser",
             url: "https://www.laserproject.es/es/22-metal",
-            price: 18.00,
+            price: 18,
             priceStr: "18,00 €",
             vat_included: true,
             specs: "600x300mm 0.5mm",
             query_date: "2026-03-31",
             shipping_cost: 5.95,
-            free_shipping_min: 75.00
+            free_shipping_min: 75
         }
     ],
     "Mirror Stainless Steel": [
@@ -282,13 +282,13 @@ const shoppingData = {
             provider: "Placas y Rótulos Online (prosl.es)",
             name: "Placa acero inoxidable espejo a medida",
             url: "https://prosl.es/placas-acero-inoxidable/",
-            price: 25.00,
+            price: 25,
             priceStr: "Desde 25,00 €",
             vat_included: true,
             specs: "Corte y pulido borde láser",
             query_date: "2026-03-31",
-            shipping_cost: 6.50,
-            free_shipping_min: 100.00
+            shipping_cost: 6.5,
+            free_shipping_min: 100
         }
     ],
     "Brushed Stainless Steel": [
@@ -296,86 +296,86 @@ const shoppingData = {
             provider: "Brildor",
             name: "Placas aluminio cepillado inoxidable",
             url: "https://www.brildor.com/es/grabado-laser/aluminio-anodizado.html",
-            price: 8.50,
+            price: 8.5,
             priceStr: "8,50 €",
             vat_included: true,
             specs: "Efecto cepillado 30x20",
             query_date: "2026-03-31",
-            shipping_cost: 4.90,
-            free_shipping_min: 60.00
+            shipping_cost: 4.9,
+            free_shipping_min: 60
         }
     ],
-    "Pine": [
+    Pine: [
         {
             provider: "Leroy Merlin",
             name: "Tablero de pino macizo multicapa 18mm",
             url: "https://www.leroymerlin.es/productos/madera/tableros/tableros-macizos/",
-            price: 15.90,
+            price: 15.9,
             priceStr: "15,90 €",
             vat_included: true,
             specs: "18mm x 80x40cm",
             query_date: "2026-03-31",
-            shipping_cost: 15.00,
+            shipping_cost: 15,
             free_shipping_min: null
         }
     ],
-    "Ceramics": [
+    Ceramics: [
         {
             provider: "Tienda de Manualidades",
             name: "Platos Cerámica Bizcocho para Grabado",
             url: "https://www.amazon.es/s?k=ceramica+bizcocho+manualidades",
-            price: 12.00,
+            price: 12,
             priceStr: "12,00 €",
             vat_included: true,
             specs: "Set 4 piezas",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
-    "Alumina": [
+    Alumina: [
         {
             provider: "Laser Project",
             name: "Tarjetas Aluminio Anodizado (Alúmina)",
             url: "https://www.laserproject.es/es/materiales-laser/aluminio-anodizado",
-            price: 15.00,
+            price: 15,
             priceStr: "15,00 €",
             vat_included: true,
             specs: "Pack 50 tarjetas visita",
             query_date: "2026-03-31",
             shipping_cost: 5.95,
-            free_shipping_min: 75.00
+            free_shipping_min: 75
         }
     ],
-    "Glass": [
+    Glass: [
         {
             provider: "Amazon España",
             name: "Láminas vidrio acrílico transparente",
             url: "https://www.amazon.es/s?k=lamina+vidrio+grabar",
-            price: 11.90,
+            price: 11.9,
             priceStr: "11,90 €",
             vat_included: true,
             specs: "30x20cm, 5 piezas",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
-    "Denim": [
+    Denim: [
         {
             provider: "Retales Online",
             name: "Tela Vaquera 100% Algodón para pruebas",
             url: "https://tejidospulido.com/telas-vaqueras",
-            price: 7.50,
+            price: 7.5,
             priceStr: "7,50 € / metro",
             vat_included: true,
             specs: "Ideal grabado láser desgastado",
             query_date: "2026-03-31",
-            shipping_cost: 4.50,
-            free_shipping_min: 50.00
+            shipping_cost: 4.5,
+            free_shipping_min: 50
         }
     ],
-    "Plastic": [
+    Plastic: [
         {
             provider: "Brildor",
             name: "Plástico Bicapa para Grabado",
@@ -385,11 +385,11 @@ const shoppingData = {
             vat_included: true,
             specs: "1.5mm, 60x30cm",
             query_date: "2026-03-31",
-            shipping_cost: 4.90,
-            free_shipping_min: 60.00
+            shipping_cost: 4.9,
+            free_shipping_min: 60
         }
     ],
-    "Carton": [
+    Carton: [
         {
             provider: "Rajapack",
             name: "Planchas de Cartón Corrugado Simple",
@@ -399,11 +399,11 @@ const shoppingData = {
             vat_included: true,
             specs: "100x120cm, paquete 20",
             query_date: "2026-03-31",
-            shipping_cost: 8.00,
-            free_shipping_min: 200.00
+            shipping_cost: 8,
+            free_shipping_min: 200
         }
     ],
-    "MDF": [
+    MDF: [
         {
             provider: "Leroy Merlin",
             name: "Tablero de MDF crudo 3mm",
@@ -420,19 +420,19 @@ const shoppingData = {
             provider: "Amazon España",
             name: "Pack 10 Tableros MDF 3mm A4",
             url: "https://www.amazon.es/s?k=tablero+mdf+3mm+a4+laser",
-            price: 12.50,
+            price: 12.5,
             priceStr: "12,50 €",
             vat_included: true,
             specs: "A4, pack 10, compatible corte láser",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         },
         {
             provider: "Laser Project",
             name: "DM rechapado específico láser",
             url: "https://www.laserproject.es/tienda/",
-            price: 15.00,
+            price: 15,
             priceStr: "Variable por formato",
             vat_included: true,
             specs: "DM/DM rechapado en varios formatos, optimizado para láser",
@@ -446,16 +446,16 @@ const shoppingData = {
             provider: "Leroy Merlin",
             name: "Chapa lisa galvanizada 100x50 cm, 0.5 mm",
             url: "https://www.leroymerlin.es/",
-            price: 12.90,
+            price: 12.9,
             priceStr: "12,90 €",
             vat_included: true,
             specs: "0.5mm",
             query_date: "2026-03-31",
-            shipping_cost: 5.90,
+            shipping_cost: 5.9,
             free_shipping_min: null
         }
     ],
-    "Rock": [
+    Rock: [
         {
             provider: "Amazon España",
             name: "Piedras Lisas Naturales para Pintar/Grabar",
@@ -465,8 +465,8 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 20 piedras de río, 5-8cm",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
     "Crystal Stone": [
@@ -474,26 +474,26 @@ const shoppingData = {
             provider: "Cristales y Minerales",
             name: "Placas Rodadas de Cuarzo Cristalino",
             url: "https://www.minerapolo.com",
-            price: 4.50,
+            price: 4.5,
             priceStr: "4,50 €",
             vat_included: true,
             specs: "Slices pulidos 4-6cm",
             query_date: "2026-03-31",
-            shipping_cost: 4.00,
-            free_shipping_min: 50.00
+            shipping_cost: 4,
+            free_shipping_min: 50
         }
     ],
-    "Mahogany": [
+    Mahogany: [
         {
             provider: "Maderas Agulló",
             name: "Tablas Caoba Sipo Cepillada",
             url: "https://www.maderasagullo.com/madera-de-caoba/",
-            price: 45.00,
+            price: 45,
             priceStr: "45,00 €",
             vat_included: true,
             specs: "Espesor 10-20mm personalizados",
             query_date: "2026-03-31",
-            shipping_cost: 12.00,
+            shipping_cost: 12,
             free_shipping_min: null
         }
     ],
@@ -502,7 +502,7 @@ const shoppingData = {
             provider: "Electan / Electrocomponentes",
             name: "Placa cobre virgen FR4 fibra de vidrio",
             url: "https://www.electan.com/placas-cobre-virgen-c-315.html",
-            price: 3.50,
+            price: 3.5,
             priceStr: "3,50 €",
             vat_included: true,
             specs: "100x160mm, 1 o 2 caras",
@@ -514,13 +514,13 @@ const shoppingData = {
             provider: "Amazon España",
             name: "Pack placas PCB FR4 100x70mm",
             url: "https://www.amazon.es/s?k=placa+pcb+fr4+100x70",
-            price: 8.00,
+            price: 8,
             priceStr: "≈8,00 € / pack",
             vat_included: true,
             specs: "Varios tamaños, FR4 cobreado",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
     "High Density Foam Board": [
@@ -533,14 +533,14 @@ const shoppingData = {
             vat_included: true,
             specs: "5mm, pack 10 hojas A3",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         },
         {
             provider: "SelfPaper",
             name: "Cartón pluma blanco/negro 5mm",
             url: "https://www.selfpaper.com/carton-pluma",
-            price: 4.00,
+            price: 4,
             priceStr: "≈4,00 € / hoja grande",
             vat_included: true,
             specs: "Planchas varias medidas, 5mm",
@@ -554,39 +554,39 @@ const shoppingData = {
             provider: "Laser Project",
             name: "Plásticos Bicapa ABS para Láser",
             url: "https://www.laserproject.es/es/materiales-laser/plastico-bicapa",
-            price: 12.50,
+            price: 12.5,
             priceStr: "12,50 €",
             vat_included: true,
             specs: "Oro/Negro, Plata/Negro 1.5mm, 60x40cm",
             query_date: "2026-03-31",
             shipping_cost: 5.95,
-            free_shipping_min: 75.00
+            free_shipping_min: 75
         }
     ],
-    "Resin": [
+    Resin: [
         {
             provider: "Feroca",
             name: "Resina Epoxi Transparente (bloques, coladas gruesas)",
             url: "https://www.feroca.com/es/",
-            price: 26.00,
+            price: 26,
             priceStr: "26,00 €",
             vat_included: true,
             specs: "Kit ~1kg para encapsulados y piezas macizas",
             query_date: "2026-03-31",
             shipping_cost: null,
-            free_shipping_min: 100.00
+            free_shipping_min: 100
         },
         {
             provider: "Amazon España",
             name: "Resina epoxi transparente para manualidades",
             url: "https://www.amazon.es/s?k=resina+epoxi+transparente+1kg",
-            price: 20.00,
+            price: 20,
             priceStr: "≈20,00 €",
             vat_included: true,
             specs: "Kits 1kg para coladas, varias marcas",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
     "Artificial Beef Bone": [
@@ -599,16 +599,16 @@ const shoppingData = {
             vat_included: true,
             specs: "Piezas pequeñas cortables/grabables",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
-    "Rubber": [
+    Rubber: [
         {
             provider: "Laser Project",
             name: "Goma láser para sellos sin olor",
             url: "https://www.laserproject.es/es/materiales-laser/caucho",
-            price: 14.50,
+            price: 14.5,
             priceStr: "14,50 €",
             vat_included: true,
             specs: "Hoja tamaño A4, 2.3mm espesor",
@@ -620,13 +620,13 @@ const shoppingData = {
             provider: "Brildor",
             name: "Goma láser para sellos",
             url: "https://www.brildor.com/es/goma-laser-sellos",
-            price: 10.00,
+            price: 10,
             priceStr: "≈10,00 € / hoja",
             vat_included: true,
             specs: "Hojas para grabado láser, varios formatos",
             query_date: "2026-03-31",
             shipping_cost: null,
-            free_shipping_min: 50.00
+            free_shipping_min: 50
         }
     ],
     "Iron Sheet": [
@@ -634,12 +634,12 @@ const shoppingData = {
             provider: "Leroy Merlin",
             name: "Chapa de acero lisa negra",
             url: "https://www.leroymerlin.es/",
-            price: 11.50,
+            price: 11.5,
             priceStr: "11,50 €",
             vat_included: true,
             specs: "1000x500mm, 1mm espesor",
             query_date: "2026-03-31",
-            shipping_cost: 6.90,
+            shipping_cost: 6.9,
             free_shipping_min: null
         }
     ],
@@ -653,11 +653,11 @@ const shoppingData = {
             vat_included: true,
             specs: "Para posavasos grabados",
             query_date: "2026-03-31",
-            shipping_cost: 0.00,
-            free_shipping_min: 29.00
+            shipping_cost: 0,
+            free_shipping_min: 29
         }
     ],
-    "Cobblestone": [
+    Cobblestone: [
         {
             provider: "Leroy Merlin",
             name: "Saco Canto Rodado Blanco",
@@ -667,7 +667,7 @@ const shoppingData = {
             vat_included: true,
             specs: "Saco 20Kg, para grabado conector continuo",
             query_date: "2026-03-31",
-            shipping_cost: 15.00,
+            shipping_cost: 15,
             free_shipping_min: null
         }
     ]
