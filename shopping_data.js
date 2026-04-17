@@ -8,7 +8,7 @@ const shoppingData = {
             priceStr: "18,99 €",
             vat_included: true,
             specs: "3mm, Pack 10 u., 30x20cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         },
@@ -20,7 +20,7 @@ const shoppingData = {
             priceStr: "4,50 € / placa",
             vat_included: true,
             specs: "3mm, Formato A3",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4.95,
             free_shipping_min: 50
         }
@@ -34,7 +34,7 @@ const shoppingData = {
             priceStr: "15,50 €",
             vat_included: true,
             specs: "2mm, Pack 5 u.",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         },
@@ -46,7 +46,7 @@ const shoppingData = {
             priceStr: "70,02 € / tablero",
             vat_included: true,
             specs: "Alistonado paulownia, 2400x1200x13mm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         }
@@ -60,7 +60,7 @@ const shoppingData = {
             priceStr: "14,99 € / rollo",
             vat_included: true,
             specs: "2mm, 5x0.5m",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         },
@@ -72,7 +72,7 @@ const shoppingData = {
             priceStr: "4,50 €",
             vat_included: true,
             specs: "300x600mm, corcho optimizado para láser CO2",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         },
@@ -84,7 +84,7 @@ const shoppingData = {
             priceStr: "≈7,59 € / ud (comprando 5)",
             vat_included: true,
             specs: "3mm, 305x610mm, corcho específico para láser CO2",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         }
@@ -98,7 +98,7 @@ const shoppingData = {
             priceStr: "12,99 €",
             vat_included: true,
             specs: "Pack 20 rodajas naturales",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -112,7 +112,7 @@ const shoppingData = {
             priceStr: "≈2,15 € / unidad",
             vat_included: true,
             specs: "Tablas de bambú 10mm, varias medidas, aptas grabado láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: 50
         },
@@ -124,7 +124,7 @@ const shoppingData = {
             priceStr: "Contactar para lote",
             vat_included: true,
             specs: "Tabla bambú 20,7x14,7cm, personalizable por grabado láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         }
@@ -138,7 +138,7 @@ const shoppingData = {
             priceStr: "7,95 €",
             vat_included: true,
             specs: "3mm, Acrílico colada garantizado láser, 60x40cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 5.95,
             free_shipping_min: 75
         },
@@ -150,7 +150,7 @@ const shoppingData = {
             priceStr: "35,00 € / m²",
             vat_included: true,
             specs: "3mm, Colada, Precio por metro cuadrado",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 6,
             free_shipping_min: null
         }
@@ -164,7 +164,7 @@ const shoppingData = {
             priceStr: "0,50 € / ud",
             vat_included: true,
             specs: "Cerámica estándar para esmaltado láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 15,
             free_shipping_min: null
         }
@@ -178,7 +178,7 @@ const shoppingData = {
             priceStr: "8,50 €",
             vat_included: true,
             specs: "Pack 50 hojas A3, 300 g",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         },
@@ -190,7 +190,7 @@ const shoppingData = {
             priceStr: "≈10,00 €",
             vat_included: true,
             specs: "Pack 50–100 hojas A4, ~300 g/m²",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -204,7 +204,7 @@ const shoppingData = {
             priceStr: "5,50 €",
             vat_included: true,
             specs: "500 hojas A4 80 g/m²",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         },
@@ -216,7 +216,7 @@ const shoppingData = {
             priceStr: "≈4,50 €",
             vat_included: true,
             specs: "500 hojas A4 80 g/m²",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         }
@@ -230,7 +230,7 @@ const shoppingData = {
             priceStr: "11,20 €",
             vat_included: true,
             specs: "Bloc 24x33cm 10 hojas",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4.9,
             free_shipping_min: 50
         }
@@ -244,7 +244,7 @@ const shoppingData = {
             priceStr: "9,99 €",
             vat_included: true,
             specs: "Pack de 4, vidrio con reverso apto para láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4,
             free_shipping_min: null
         }
@@ -258,7 +258,7 @@ const shoppingData = {
             priceStr: "24,50 €",
             vat_included: true,
             specs: "Aprox 1 kg, curtido sin cromo (seguro láser)",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -272,7 +272,7 @@ const shoppingData = {
             priceStr: "18,00 €",
             vat_included: true,
             specs: "600x300mm 0.5mm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 5.95,
             free_shipping_min: 75
         }
@@ -286,7 +286,7 @@ const shoppingData = {
             priceStr: "Desde 25,00 €",
             vat_included: true,
             specs: "Corte y pulido borde láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 6.5,
             free_shipping_min: 100
         }
@@ -300,7 +300,7 @@ const shoppingData = {
             priceStr: "8,50 €",
             vat_included: true,
             specs: "Efecto cepillado 30x20",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4.9,
             free_shipping_min: 60
         }
@@ -314,7 +314,7 @@ const shoppingData = {
             priceStr: "15,90 €",
             vat_included: true,
             specs: "18mm x 80x40cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 15,
             free_shipping_min: null
         }
@@ -328,7 +328,7 @@ const shoppingData = {
             priceStr: "12,00 €",
             vat_included: true,
             specs: "Set 4 piezas",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -342,7 +342,7 @@ const shoppingData = {
             priceStr: "15,00 €",
             vat_included: true,
             specs: "Pack 50 tarjetas visita",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 5.95,
             free_shipping_min: 75
         }
@@ -356,7 +356,7 @@ const shoppingData = {
             priceStr: "11,90 €",
             vat_included: true,
             specs: "30x20cm, 5 piezas",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -370,7 +370,7 @@ const shoppingData = {
             priceStr: "7,50 € / metro",
             vat_included: true,
             specs: "Ideal grabado láser desgastado",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4.5,
             free_shipping_min: 50
         }
@@ -384,7 +384,7 @@ const shoppingData = {
             priceStr: "6,95 €",
             vat_included: true,
             specs: "1.5mm, 60x30cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4.9,
             free_shipping_min: 60
         }
@@ -398,7 +398,7 @@ const shoppingData = {
             priceStr: "0,85 € / ud",
             vat_included: true,
             specs: "100x120cm, paquete 20",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 8,
             free_shipping_min: 200
         }
@@ -412,7 +412,7 @@ const shoppingData = {
             priceStr: "3,25 €",
             vat_included: true,
             specs: "3mm, 60x120cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         },
@@ -424,7 +424,7 @@ const shoppingData = {
             priceStr: "12,50 €",
             vat_included: true,
             specs: "A4, pack 10, compatible corte láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         },
@@ -436,7 +436,7 @@ const shoppingData = {
             priceStr: "Variable por formato",
             vat_included: true,
             specs: "DM/DM rechapado en varios formatos, optimizado para láser",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         }
@@ -450,7 +450,7 @@ const shoppingData = {
             priceStr: "12,90 €",
             vat_included: true,
             specs: "0.5mm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 5.9,
             free_shipping_min: null
         }
@@ -464,7 +464,7 @@ const shoppingData = {
             priceStr: "14,99 €",
             vat_included: true,
             specs: "Pack 20 piedras de río, 5-8cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -478,7 +478,7 @@ const shoppingData = {
             priceStr: "4,50 €",
             vat_included: true,
             specs: "Slices pulidos 4-6cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 4,
             free_shipping_min: 50
         }
@@ -492,7 +492,7 @@ const shoppingData = {
             priceStr: "45,00 €",
             vat_included: true,
             specs: "Espesor 10-20mm personalizados",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 12,
             free_shipping_min: null
         }
@@ -506,7 +506,7 @@ const shoppingData = {
             priceStr: "3,50 €",
             vat_included: true,
             specs: "100x160mm, 1 o 2 caras",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         },
@@ -518,7 +518,7 @@ const shoppingData = {
             priceStr: "≈8,00 € / pack",
             vat_included: true,
             specs: "Varios tamaños, FR4 cobreado",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -532,7 +532,7 @@ const shoppingData = {
             priceStr: "19,95 €",
             vat_included: true,
             specs: "5mm, pack 10 hojas A3",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         },
@@ -544,7 +544,7 @@ const shoppingData = {
             priceStr: "≈4,00 € / hoja grande",
             vat_included: true,
             specs: "Planchas varias medidas, 5mm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         }
@@ -558,7 +558,7 @@ const shoppingData = {
             priceStr: "12,50 €",
             vat_included: true,
             specs: "Oro/Negro, Plata/Negro 1.5mm, 60x40cm",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 5.95,
             free_shipping_min: 75
         }
@@ -572,7 +572,7 @@ const shoppingData = {
             priceStr: "26,00 €",
             vat_included: true,
             specs: "Kit ~1kg para encapsulados y piezas macizas",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: 100
         },
@@ -584,7 +584,7 @@ const shoppingData = {
             priceStr: "≈20,00 €",
             vat_included: true,
             specs: "Kits 1kg para coladas, varias marcas",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -598,7 +598,7 @@ const shoppingData = {
             priceStr: "8,99 €",
             vat_included: true,
             specs: "Piezas pequeñas cortables/grabables",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -612,7 +612,7 @@ const shoppingData = {
             priceStr: "14,50 €",
             vat_included: true,
             specs: "Hoja tamaño A4, 2.3mm espesor",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: null
         },
@@ -624,7 +624,7 @@ const shoppingData = {
             priceStr: "≈10,00 € / hoja",
             vat_included: true,
             specs: "Hojas para grabado láser, varios formatos",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: null,
             free_shipping_min: 50
         }
@@ -638,7 +638,7 @@ const shoppingData = {
             priceStr: "11,50 €",
             vat_included: true,
             specs: "1000x500mm, 1mm espesor",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 6.9,
             free_shipping_min: null
         }
@@ -652,7 +652,7 @@ const shoppingData = {
             priceStr: "15,99 €",
             vat_included: true,
             specs: "Para posavasos grabados",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 0,
             free_shipping_min: 29
         }
@@ -666,7 +666,7 @@ const shoppingData = {
             priceStr: "8,49 €",
             vat_included: true,
             specs: "Saco 20Kg, para grabado conector continuo",
-            query_date: "2026-04-16",
+            query_date: "2026-04-17",
             shipping_cost: 15,
             free_shipping_min: null
         }
