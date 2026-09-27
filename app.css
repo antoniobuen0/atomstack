@@ -387,6 +387,7 @@ html, body {
 .price-state.stale { color: var(--warn); }
 .price-state.blocked, .price-state.unverified { color: var(--bad); }
 .price-state.search { color: var(--ink-3); }
+.price-state.review { color: var(--warn); }
 
 /* ---------- Cesta flotante ---------- */
 .cart-layer {

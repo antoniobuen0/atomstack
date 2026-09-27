@@ -442,6 +442,7 @@ function priceStateOf(opt) {
     const s = opt.price_state || 'unverified';
     const label = {
         live: t('verificado', 'verified'),
+        review: t('cambio grande, revisar', 'big change, needs review'),
         stale: t('sin leer hoy', 'not read today'),
         blocked: t('tienda protegida', 'shop blocks scraping'),
         search: t('búsqueda, sin ficha', 'search page, no product'),

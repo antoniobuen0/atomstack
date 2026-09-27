@@ -252,17 +252,27 @@ def main():
                 how = 'reader'
 
             if new_price is not None and new_price > 0:
-                if old_price and abs(new_price - old_price) > 0.005:
-                    print(f"  ✅ {p['provider']}: {old_price} → {new_price} € ({how})")
+                # Un salto grande no es una actualización: puede que la página exponga el
+                # precio de otra variante o de un producto relacionado. Lo marcamos a revisar
+                # en vez de darlo por bueno en silencio.
+                jumped = bool(old_price) and abs(new_price - old_price) / old_price > 0.5
+                p['price'] = new_price
+                p['priceStr'] = f"{new_price:.2f}".replace('.', ',') + ' €'
+                if jumped:
+                    print(f"  🚩 {p['provider']}: {old_price} → {new_price} € ({how}) salto grande, revisar")
+                    p['query_date'] = TODAY
+                    mark(p, 'review', TODAY, how)
                     moved += 1
                 else:
-                    print(f"  ✔  {p['provider']}: {new_price} € confirmado ({how})")
-                p['price'] = new_price
-                p['priceStr'] = f"{str(new_price).replace('.', ',')} €"
-                # query_date = fecha en la que HEMOS VISTO este precio. Solo aquí se toca.
-                p['query_date'] = TODAY
-                mark(p, 'live', TODAY, how)
-                live += 1
+                    if old_price and abs(new_price - old_price) > 0.005:
+                        print(f"  ✅ {p['provider']}: {old_price} → {new_price} € ({how})")
+                        moved += 1
+                    else:
+                        print(f"  ✔  {p['provider']}: {new_price} € confirmado ({how})")
+                    # query_date = fecha en la que HEMOS VISTO este precio. Solo aquí se toca.
+                    p['query_date'] = TODAY
+                    mark(p, 'live', TODAY, how)
+                    live += 1
             else:
                 print(f"  ⚠️  {p['provider']}: sin detección, conserva el último precio visto")
                 mark(p, 'stale', TODAY)
