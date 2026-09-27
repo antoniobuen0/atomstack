@@ -44,6 +44,26 @@ const i18nHeaders = {
 };
 
 let currentLang = 'es'; // 'en' or 'es'
+
+function t(es, en) { return currentLang === 'es' ? es : en; }
+
+const TAB_LABELS = {
+    materials: { es: '🎛️ Parámetros Láser', en: '🎛️ Laser Parameters' },
+    machine: { es: '🔧 Máquina', en: '🔧 Machine' },
+    techniques: { es: '🧭 Usos', en: '🧭 Use cases' },
+    sources: { es: '🔗 Fuentes', en: '🔗 Sources' },
+    products: { es: '📦 Tienda Insumos', en: '📦 Supplies Store' },
+    providers: { es: '🏪 Proveedores', en: '🏪 Suppliers' }
+};
+
+const TAB_SUBTITLES = {
+    materials: { es: 'Configuración de materiales', en: 'Material Settings' },
+    machine: { es: 'Ficha técnica verificada, con fuente en cada valor', en: 'Verified spec sheet, every value sourced' },
+    techniques: { es: 'Técnicas y usos reales, con su procedencia', en: 'Real techniques and use cases, with provenance' },
+    sources: { es: 'De dónde sale cada dato del panel', en: 'Where every number in this panel comes from' },
+    products: { es: 'Insumos por material y grosor', en: 'Supplies by material and thickness' },
+    providers: { es: 'Proveedores comparados', en: 'Comparable suppliers' }
+};
 let currentSort = 'default';
 let rawDataRows = [];
 let headers = [];
@@ -70,6 +90,7 @@ const shoppingTitle = document.getElementById('shopping-title');
 const closeShoppingBtn = document.getElementById('close-shopping-btn');
 const providersContainer = document.getElementById('providers-container');
 const cartContainer = document.getElementById('cart-container');
+const detailContainer = document.getElementById('detail-container');
 const toggleShoppingBtn = document.getElementById('toggle-shopping-btn');
 const shoppingEmptyMsg = document.getElementById('shopping-empty-msg');
 const viewCartBtn = document.getElementById('view-cart-btn');
@@ -82,6 +103,9 @@ const headerCartTotal = document.getElementById('header-cart-total');
 // Tab and View Elements
 const materialsView = document.getElementById('materials-view');
 const productsView = document.getElementById('products-view');
+const machineView = document.getElementById('machine-view');
+const techniquesView = document.getElementById('techniques-view');
+const sourcesView = document.getElementById('sources-view');
 const storeGrid = document.getElementById('store-grid');
 const searchRow = document.querySelector('.search-bar-row');
 const filterBar = document.querySelector('.filter-bar');
@@ -94,6 +118,7 @@ let activeTab = 'materials';
 let cart = [];
 let currentPanelView = 'catalog'; // 'catalog' | 'cart'
 let currentActiveMaterial = null;
+let detailMaterial = null;
 
 function parseCSV(csvText) {
     const lines = csvText.trim().split('\n');
@@ -217,21 +242,50 @@ function renderTable() {
         const tr = document.createElement('tr');
         tr.className = 'clickable-row';
         const displayCols = data.translatedRow.slice(0, -1);
-        tr.innerHTML = displayCols.map((cell, idx) => `<td data-label="${currentHeaders[idx].replace(/<[^>]*>?/gm, '')}">${cell !== undefined ? cell : '-'}</td>`).join('');
+        displayCols.forEach((cell, idx) => {
+            const td = document.createElement('td');
+            td.setAttribute('data-label', currentHeaders[idx].replace(/<[^>]*>?/gm, ''));
+            td.textContent = cell !== undefined ? cell : '-';
+            if (idx === 0) {
+                const meta = MATERIAL_META[data.materialEn];
+                const badge = materialSafetyMark(meta);
+                td.innerHTML = `<span class="row-name">${td.textContent}</span>` +
+                    `<span class="row-actions">` +
+                    (badge ? `<span class="safety-mark ${badge}" title="${t('Seguridad', 'Safety')}">⚠</span>` : '') +
+                    `<button class="row-btn" title="${t('Ver detalle y fuentes', 'See detail and sources')}" aria-label="${t('Ver detalle', 'See detail')}">ⓘ</button>` +
+                    `<button class="row-btn" data-shop title="${t('Ver insumos', 'See supplies')}" aria-label="${t('Ver insumos', 'See supplies')}">🛒</button>` +
+                    `</span>`;
+            }
+            tr.appendChild(td);
+        });
 
-        tr.addEventListener('click', () => {
+        tr.addEventListener('click', () => openMaterialDetail(data.materialEn, data.currentName));
+        tr.querySelector('[data-shop]').addEventListener('click', (e) => {
+            e.stopPropagation();
             openShoppingPanel(data.materialEn, data.currentName);
         });
 
         tableBody.appendChild(tr);
     });
+
+    if (typeof renderExtraMaterials === 'function') renderExtraMaterials(searchTerm);
+}
+
+function updateSubtitle() {
+    const s = TAB_SUBTITLES[activeTab] || TAB_SUBTITLES.materials;
+    subtitle.textContent = currentLang === 'es' ? s.es : s.en;
 }
 
 function updateUILabels() {
+    Object.keys(TAB_LABELS).forEach(id => {
+        const btn = document.getElementById(`tab-${id}`);
+        if (btn) btn.textContent = currentLang === 'es' ? TAB_LABELS[id].es : TAB_LABELS[id].en;
+    });
+    updateSubtitle();
+
     if (currentLang === 'es') {
         langLabel.textContent = "English";
         exportLabel.textContent = "Exportar Excel";
-        subtitle.textContent = "Configuración de materiales";
         searchInput.placeholder = "Buscar material...";
         softwareFilter.options[0].text = "Todos los Software";
         processingFilter.options[0].text = "Todos los Procesos";
@@ -243,7 +297,6 @@ function updateUILabels() {
     } else {
         langLabel.textContent = "Castellano";
         exportLabel.textContent = "Export to Excel";
-        subtitle.textContent = "Material Settings";
         searchInput.placeholder = "Search materials...";
         softwareFilter.options[0].text = "All Software";
         processingFilter.options[0].text = "All Processing";
@@ -257,9 +310,8 @@ function updateUILabels() {
 
 // Universal search: dispatches to whichever tab is active
 searchInput.addEventListener('input', () => {
-    if (activeTab === 'products') renderStoreGrid();
-    else if (activeTab === 'providers') renderProvidersView();
-    else renderTable();
+    const conf = TAB_VIEWS[activeTab] || TAB_VIEWS.materials;
+    conf.render();
 });
 softwareFilter.addEventListener('change', renderTable);
 processingFilter.addEventListener('change', renderTable);
@@ -272,11 +324,15 @@ sortControls.addEventListener('change', (e) => {
 langToggleBtn.addEventListener('click', () => {
     currentLang = currentLang === 'en' ? 'es' : 'en';
     updateUILabels();
-    renderTable();
+    (TAB_VIEWS[activeTab] || TAB_VIEWS.materials).render();
+    if (detailMaterial) renderMaterialDetail();
+    if (currentPanelView === 'catalog' && currentActiveMaterial) renderShoppingOptions(currentActiveMaterial.en);
 });
 
 exportExcelBtn.addEventListener('click', () => {
-    const table = document.getElementById('material-table');
+    const table = document.getElementById('material-table').cloneNode(true);
+    // Los iconos de fila son UI, no datos: fuera del export.
+    table.querySelectorAll('.row-actions').forEach(n => n.remove());
     const ws = XLSX.utils.table_to_sheet(table);
 
     const currentHeaders = i18nHeaders[currentLang];
@@ -345,29 +401,41 @@ function updateCartUI() {
     }
 }
 
-function toggleCartView(forceView) {
-    if (forceView) currentPanelView = forceView;
-    else currentPanelView = currentPanelView === 'catalog' ? 'cart' : 'catalog';
+function setPanelMode(mode) {
+    currentPanelView = mode;
+    providersContainer.style.display = mode === 'catalog' ? 'block' : 'none';
+    cartContainer.style.display = mode === 'cart' ? 'block' : 'none';
+    detailContainer.style.display = mode === 'detail' ? 'block' : 'none';
 
-    if (currentPanelView === 'cart') {
-        providersContainer.style.display = 'none';
-        cartContainer.style.display = 'block';
-        shoppingTitle.textContent = currentLang === 'es' ? 'Tu Cesta' : 'Your Cart';
-        viewCartBtn.innerHTML = '🔙 Volver';
-        renderCart();
+    if (mode === 'cart') {
+        shoppingTitle.textContent = t('Tu Cesta', 'Your Cart');
+        viewCartBtn.innerHTML = '🔙 ' + t('Volver', 'Back');
+    } else if (mode === 'detail') {
+        shoppingTitle.textContent = detailMaterial ? detailMaterial.disp : t('Catálogo', 'Catalog');
+        viewCartBtn.innerHTML = '🛒 <span id="cart-count">' + cart.reduce((s, i) => s + i.qty, 0) + '</span>';
     } else {
-        providersContainer.style.display = 'block';
-        cartContainer.style.display = 'none';
-        viewCartBtn.innerHTML = `🛒 <span id="cart-count">${cart.reduce((s, i) => s + i.qty, 0)}</span>`;
+        viewCartBtn.innerHTML = '🛒 <span id="cart-count">' + cart.reduce((s, i) => s + i.qty, 0) + '</span>';
         if (currentActiveMaterial) {
-            shoppingTitle.textContent = currentLang === 'es' ? `Precios: ${currentActiveMaterial.disp}` : `Prices: ${currentActiveMaterial.disp}`;
+            shoppingTitle.textContent = t(`Precios: ${currentActiveMaterial.disp}`, `Prices: ${currentActiveMaterial.disp}`);
         } else {
-            shoppingTitle.textContent = 'Catálogo';
+            shoppingTitle.textContent = t('Catálogo', 'Catalog');
         }
     }
 }
 
-viewCartBtn.addEventListener('click', () => toggleCartView());
+function toggleCartView(forceView) {
+    if (forceView) setPanelMode(forceView);
+    else setPanelMode(currentPanelView === 'cart' ? 'catalog' : 'cart');
+    if (currentPanelView === 'cart') renderCart();
+}
+
+viewCartBtn.addEventListener('click', () => {
+    if (currentPanelView === 'detail' && detailMaterial) {
+        openShoppingPanel(detailMaterial.en, detailMaterial.disp);
+    } else {
+        toggleCartView();
+    }
+});
 
 function openShoppingPanel(materialEn, materialNameDisp) {
     if (!shoppingPanel.classList.contains('open')) {
@@ -376,17 +444,9 @@ function openShoppingPanel(materialEn, materialNameDisp) {
     }
 
     currentActiveMaterial = { en: materialEn, disp: materialNameDisp };
-
-    // Switch to catalog mode whenever a new material is clicked
-    toggleCartView('catalog');
-
-    if (currentLang === 'es') {
-        shoppingTitle.textContent = `Precios: ${materialNameDisp} (Todos los grosores)`;
-    } else {
-        shoppingTitle.textContent = `Prices for: ${materialNameDisp} (All thicknesses)`;
-    }
-
     renderShoppingOptions(materialEn);
+    setPanelMode('catalog');
+    shoppingTitle.textContent = t(`Precios: ${materialNameDisp} (Todos los grosores)`, `Prices for: ${materialNameDisp} (All thicknesses)`);
 }
 
 function renderShoppingOptions(materialEn) {
@@ -501,34 +561,33 @@ headerCartBtn.addEventListener('click', () => {
 });
 
 // Tab Logic
+const TAB_VIEWS = {
+    materials: { view: 'materials-view', filterBar: true, render: () => renderTable() },
+    machine: { view: 'machine-view', filterBar: false, render: () => renderMachineView() },
+    techniques: { view: 'techniques-view', filterBar: false, render: () => renderTechniquesView() },
+    sources: { view: 'sources-view', filterBar: false, render: () => renderSourcesView() },
+    products: { view: 'products-view', filterBar: false, render: () => renderStoreGrid() },
+    providers: { view: 'providers-view', filterBar: false, render: () => renderProvidersView() }
+};
+
 window.switchTab = function (tabId) {
+    const conf = TAB_VIEWS[tabId];
+    if (!conf) return;
     activeTab = tabId;
+
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tab-${tabId}`).classList.add('active');
 
-    const providersView = document.getElementById('providers-view');
+    Object.values(TAB_VIEWS).forEach(c => {
+        const el = document.getElementById(c.view);
+        if (el) el.style.display = 'none';
+    });
+    document.getElementById(conf.view).style.display = 'block';
 
-    if (tabId === 'materials') {
-        materialsView.style.display = 'block';
-        searchRow.style.display = 'block';
-        filterBar.style.display = 'flex';
-        productsView.style.display = 'none';
-        if (providersView) providersView.style.display = 'none';
-        renderTable();
-    } else if (tabId === 'products') {
-        materialsView.style.display = 'none';
-        searchRow.style.display = 'block';
-        filterBar.style.display = 'none';
-        productsView.style.display = 'block';
-        if (providersView) providersView.style.display = 'none';
-        renderStoreGrid();
-    } else if (tabId === 'providers') {
-        materialsView.style.display = 'none';
-        searchRow.style.display = 'block';
-        filterBar.style.display = 'none';
-        productsView.style.display = 'none';
-        if (providersView) { providersView.style.display = 'block'; renderProvidersView(); }
-    }
+    searchRow.style.display = 'block';
+    filterBar.style.display = conf.filterBar ? 'flex' : 'none';
+    conf.render();
+    updateSubtitle();
 };
 
 function renderStoreGrid() {
@@ -826,9 +885,5 @@ function renderProvidersView() {
     }
 }
 
-// Initialization
-parseCSV(a20ProV2Data);
-initMaterialFilter();
-updateUILabels();
-renderTable();
+// Initialization runs from panel.js, which owns the curated views
 

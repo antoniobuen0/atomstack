@@ -6,10 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AtomStack A20 Pro V2 Material Settings</title>
     <!-- Use Google Fonts -->
-    <link
-        href="https://fonts.googleapis.com/css2?family=-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji&display=swap"
-        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="panel.css">
     <!-- SheetJS for Excel export -->
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
@@ -40,6 +41,9 @@
 
                 <div class="nav-tabs">
                     <button class="tab-btn active" id="tab-materials" onclick="switchTab('materials')">🎛️ Parámetros Láser</button>
+                    <button class="tab-btn" id="tab-machine" onclick="switchTab('machine')">🔧 Máquina</button>
+                    <button class="tab-btn" id="tab-techniques" onclick="switchTab('techniques')">🧭 Usos</button>
+                    <button class="tab-btn" id="tab-sources" onclick="switchTab('sources')">🔗 Fuentes</button>
                     <button class="tab-btn" id="tab-products" onclick="switchTab('products')">📦 Tienda Insumos</button>
                     <button class="tab-btn" id="tab-providers" onclick="switchTab('providers')">🏪 Proveedores</button>
                 </div>
@@ -72,6 +76,7 @@
             <main>
                 <!-- Materials Mode -->
                 <div id="materials-view">
+                    <div id="extra-materials"></div>
                     <div class="table-container">
                         <table id="material-table" class="markdown-table">
                             <thead>
@@ -88,6 +93,15 @@
                         <p>No se han encontrado resultados.</p>
                     </div>
                 </div>
+
+                <!-- Machine Specs Mode -->
+                <div id="machine-view" style="display: none;" class="panel-view"></div>
+
+                <!-- Techniques / Uses Mode -->
+                <div id="techniques-view" style="display: none;" class="panel-view"></div>
+
+                <!-- Sources Mode -->
+                <div id="sources-view" style="display: none;" class="panel-view"></div>
 
                 <!-- Products Store Mode -->
                 <div id="products-view" style="display: none; padding: 32px;">
@@ -140,6 +154,10 @@
             <div class="shopping-content" id="cart-container" style="display: none;">
                 <!-- Cart items injected here -->
             </div>
+
+            <div class="shopping-content" id="detail-container" style="display: none;">
+                <!-- Material detail injected here -->
+            </div>
         </aside>
 
         <!-- Shopping Cart Button (Floating for Mobile) -->
@@ -155,7 +173,12 @@
     <!-- Include data manually since imports block on file:// protocol without a server -->
     <script src="data.js"></script>
     <script src="shopping_data.js"></script>
+    <script src="data/sources.js"></script>
+    <script src="data/machine.js"></script>
+    <script src="data/techniques.js"></script>
+    <script src="data/materials.js"></script>
     <script src="script.js"></script>
+    <script src="panel.js"></script>
 </body>
 
 </html>
