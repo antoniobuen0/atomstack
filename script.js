@@ -449,7 +449,9 @@ function priceStateOf(opt) {
         unverified: t('sin verificar', 'unverified')
     }[s];
     const via = s === 'live' && opt.price_source === 'reader' ? ' ' + t('(leído por texto)', '(read as text)') : '';
-    return `<span class="price-state ${s}" title="${esc(label)} · ${esc(opt.query_date || '')}">● ${label}${via}${s === 'live' && opt.query_date ? ' ' + opt.query_date : ''}</span>`;
+    // Todo estado que no sea "búsqueda" enseña la fecha: un precio viejo se ve viejo.
+    const when = opt.query_date ? ' · ' + t('de', 'from') + ' ' + opt.query_date : '';
+    return `<span class="price-state ${s}" title="${esc(label)} · ${esc(opt.query_date || '')}">● ${label}${via}${s === 'search' ? '' : when}</span>`;
 }
 
 function priceCoverage() {

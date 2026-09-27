@@ -165,6 +165,43 @@ PARSERS = [
 ]
 
 
+def price_from_soup(soup, url):
+    """Los tres intentos habituales sobre un HTML ya cargado."""
+    for domain, parser in PARSERS:
+        if domain in url:
+            price = parser(soup)
+            if price:
+                return price, 'selector'
+            break
+    price = extract_jsonld(soup)
+    if price:
+        return price, 'jsonld'
+    price = extract_generic(soup)
+    if price:
+        return price, 'generic'
+    return None, None
+
+
+def render_html(url):
+    """Chromium real: muchas de nuestras tiendas montan el precio por JS, no es un muro."""
+    try:
+        from playwright.sync_api import sync_playwright
+    except ImportError:
+        print("  -> playwright no instalado, salto el renderizado")
+        return None
+    try:
+        with sync_playwright() as pw:
+            browser = pw.chromium.launch(args=['--no-sandbox'])
+            page = browser.new_page(user_agent=HEADERS['User-Agent'], locale='es-ES')
+            page.goto(url, timeout=30000, wait_until='networkidle')
+            html = page.content()
+            browser.close()
+        return html
+    except Exception as e:
+        print(f"  -> navegador falló: {e}")
+        return None
+
+
 def scrape_url(url):
     """Devuelve (precio, cómo) o (None, motivo)."""
     print(f"🔗 Analizando: {url}...")
@@ -172,29 +209,25 @@ def scrape_url(url):
         print("  -> Sitio protegido (bot-detection). NO damos el precio por verificado.")
         return None, 'blocked'
 
+    plain_error = None
     try:
         res = requests.get(url, headers=HEADERS, timeout=15)
-        if res.status_code != 200:
-            return None, f'http{res.status_code}'
-        soup = BeautifulSoup(res.text, 'html.parser')
-    except Exception as e:
-        print(f"❌ Error en {url}: {e}")
-        return None, 'error'
-
-    for domain, parser in PARSERS:
-        if domain in url:
-            price = parser(soup)
+        if res.status_code == 200:
+            price, how = price_from_soup(BeautifulSoup(res.text, 'html.parser'), url)
             if price:
-                return price, 'selector'
-            break
+                return price, how
+        else:
+            plain_error = f'http{res.status_code}'
+    except Exception as e:
+        plain_error = str(e)
+        print(f"❌ Error directo en {url}: {e}")
 
-    price = extract_jsonld(soup)
-    if price:
-        return price, 'jsonld'
-    price = extract_generic(soup)
-    if price:
-        return price, 'generic'
-    return None, 'notfound'
+    html = render_html(url)
+    if html:
+        price, how = price_from_soup(BeautifulSoup(html, 'html.parser'), url)
+        if price:
+            return price, how or 'browser'
+    return None, plain_error or 'notfound'
 
 
 def mark(p, state, attempt, source=None):
