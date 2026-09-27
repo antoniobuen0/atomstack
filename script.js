@@ -446,6 +446,7 @@ function priceStateOf(opt) {
         stale: t('sin leer hoy', 'not read today'),
         blocked: t('tienda protegida', 'shop blocks scraping'),
         search: t('búsqueda, sin ficha', 'search page, no product'),
+        dead: t('enlace roto', 'dead link'),
         unverified: t('sin verificar', 'unverified')
     }[s];
     const via = s === 'live' && opt.price_source === 'reader' ? ' ' + t('(leído por texto)', '(read as text)') : '';
@@ -454,10 +455,19 @@ function priceStateOf(opt) {
     return `<span class="price-state ${s}" title="${esc(label)} · ${esc(opt.query_date || '')}">● ${label}${via}${s === 'search' ? '' : when}</span>`;
 }
 
+// Cobertura honesta: solo cuentan las filas que SON una ficha de producto.
+// Las búsquedas (Amazon y compañía) y los enlaces muertos no son precios fallidos,
+// son otra clase de entrada y no entran en el denominador.
 function priceCoverage() {
     const all = Object.values(shoppingData).flat();
-    const live = all.filter(o => o.price_state === 'live').length;
-    return { total: all.length, live };
+    const scorable = all.filter(o => !['search', 'dead'].includes(o.price_state));
+    return {
+        total: scorable.length,
+        all: all.length,
+        live: scorable.filter(o => o.price_state === 'live').length,
+        search: all.filter(o => o.price_state === 'search').length,
+        dead: all.filter(o => o.price_state === 'dead').length
+    };
 }
 
 function renderShoppingOptions(materialEn) {
@@ -495,7 +505,7 @@ function renderShoppingOptions(materialEn) {
             </div>
             <div class="shopping-footer">
                 <div class="shopping-price">
-                    ${opt.priceStr}
+                    ${opt.price_state === 'search' ? '≈ ' : ''}${opt.priceStr}
                     ${opt.vat_included ? '<span class="vat-badge">IVA inc.</span>' : ''}
                 </div>
                 <div style="display:flex; gap: 8px;">
@@ -609,9 +619,13 @@ function renderStoreGrid() {
     const summary = document.getElementById('price-summary');
     if (summary) {
         const pct = cov.total ? Math.round(cov.live / cov.total * 100) : 0;
+        const extra = cov.search + cov.dead
+            ? t(` · sin contar ${cov.search} búsquedas y ${cov.dead} rotos`,
+                ` · excluding ${cov.search} searches and ${cov.dead} dead links`)
+            : '';
         summary.textContent = t(
-            `${cov.live} de ${cov.total} precios verificados en la tienda hoy (${pct} %)`,
-            `${cov.live} of ${cov.total} prices verified against the shop today (${pct} %)`
+            `${cov.live} de ${cov.total} fichas con precio verificado hoy (${pct} %)` + extra,
+            `${cov.live} of ${cov.total} product pages verified today (${pct} %)` + extra
         );
         summary.classList.toggle('all-live', cov.live === cov.total);
     }

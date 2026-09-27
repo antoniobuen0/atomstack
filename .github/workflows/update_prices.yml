@@ -15,9 +15,10 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      - run: pip install requests beautifulsoup4 playwright
-      - name: Navegador para las páginas montadas en JS
-        run: playwright install --with-deps chromium
+      # Sin chromium: medido el 2026-09-27, renderizar con navegador no añadió ni un precio
+      # verificado (5 -> 5) porque lo que falla son URLs de categoría, no el JS. El código
+      # sigue intentando el navegador si algún día se instala, y sin él degrada sin error.
+      - run: pip install requests beautifulsoup4
       - name: Exportar JS a JSON
         run: |
           node -e "

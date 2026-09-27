@@ -208,7 +208,6 @@ def scrape_url(url):
     if is_blocked(url):
         print("  -> Sitio protegido (bot-detection). NO damos el precio por verificado.")
         return None, 'blocked'
-
     plain_error = None
     try:
         res = requests.get(url, headers=HEADERS, timeout=15)
@@ -219,6 +218,10 @@ def scrape_url(url):
         else:
             plain_error = f'http{res.status_code}'
     except Exception as e:
+        # Dominio que ya no resuelve: no es "sin detectar", es un enlace muerto.
+        if 'Failed to resolve' in str(e) or 'NameResolutionError' in str(e):
+            print(f"  💀 {url} no resuelve: enlace muerto")
+            return None, 'dead'
         plain_error = str(e)
         print(f"❌ Error directo en {url}: {e}")
 
@@ -251,7 +254,7 @@ def main():
     total = sum(len(v) for v in data.values())
     print(f"✅ Cargados {len(data)} materiales ({total} ofertas) desde {INPUT_FILE}")
 
-    live = stale = blocked = moved = searched = 0
+    live = stale = blocked = moved = searched = dead = 0
 
     for material, products in data.items():
         print(f"\n📦 {material}")
@@ -307,14 +310,19 @@ def main():
                     mark(p, 'live', TODAY, how)
                     live += 1
             else:
-                print(f"  ⚠️  {p['provider']}: sin detección, conserva el último precio visto")
-                mark(p, 'stale', TODAY)
-                stale += 1
+                if how == 'dead':
+                    print(f"  💀 {p['provider']}: el dominio no existe, enlace muerto")
+                    mark(p, 'dead', TODAY)
+                    dead += 1
+                else:
+                    print(f"  ⚠️  {p['provider']}: sin detección, conserva el último precio visto")
+                    mark(p, 'stale', TODAY)
+                    stale += 1
 
             time.sleep(1.5)
 
     print(f"\n📊 Resumen: verificados {live} · protegidos {blocked} · sin detectar {stale} · "
-          f"busquedas sin ficha {searched} · precios cambiados {moved}")
+          f"busquedas sin ficha {searched} · enlaces muertos {dead} · precios cambiados {moved}")
 
     print(f"\n💾 Guardando {OUTPUT_JSON}...")
     with open(OUTPUT_JSON, "w", encoding='utf-8') as f:
