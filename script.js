@@ -444,9 +444,11 @@ function priceStateOf(opt) {
         live: t('verificado', 'verified'),
         stale: t('sin leer hoy', 'not read today'),
         blocked: t('tienda protegida', 'shop blocks scraping'),
+        search: t('búsqueda, sin ficha', 'search page, no product'),
         unverified: t('sin verificar', 'unverified')
     }[s];
-    return `<span class="price-state ${s}" title="${esc(label)} · ${esc(opt.query_date || '')}">● ${label}${s === 'live' && opt.query_date ? ' ' + opt.query_date : ''}</span>`;
+    const via = s === 'live' && opt.price_source === 'reader' ? ' ' + t('(leído por texto)', '(read as text)') : '';
+    return `<span class="price-state ${s}" title="${esc(label)} · ${esc(opt.query_date || '')}">● ${label}${via}${s === 'live' && opt.query_date ? ' ' + opt.query_date : ''}</span>`;
 }
 
 function priceCoverage() {

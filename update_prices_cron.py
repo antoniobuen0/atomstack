@@ -13,17 +13,63 @@ OUTPUT_JS = "shopping_data.js"
 
 TODAY = datetime.now().strftime("%Y-%m-%d")
 
-# Tiendas que no podemos leer de forma fiable desde un runner sin IP española ni navegador real
-# (bot-detection / Cloudflare). No se toca su query_date: un precio que no hemos visto hoy no
-# puede presentarse como verificado hoy.
-SKIP_DOMAINS = ['amazon.es', 'leroymerlin', 'carrefour', 'ikea.com',
-                'bauhaus.es', 'cncbarato.com', 'rotulos24.com', 'barnaart.com',
-                'tejidospulido.com', 'regalopublicidad.com', 'minerapolo.com', 'prosl.es']
+# Tiendas que el runner no puede leer directamente. Se mantienen en la lista sólo para las
+# que de verdad bloquean; el lector con claves de render JS resuelve muchas más.
+SKIP_DOMAINS = ['amazon.es', 'leroymerlin', 'carrefour', 'ikea.com', 'bauhaus.es']
+
+# Lector que renderiza JS y salva el anti-bot básico. Sin API key: ~20 peticiones/min,
+# de sobra para 50 URLs una vez al día.
+READER_BASE = 'https://r.jina.ai/'
 
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
     "Accept-Language": "es-ES,es;q=0.9"
 }
+
+# URLs que no son una ficha de producto, sino una búsqueda o una categoría:
+# ahí no hay UN precio, así que no las damos por verificables.
+SEARCH_PATTERNS = ['/s?', '?k=', '&k=', '/search?', '?q=', '/c/', '/busqueda', 'listing']
+
+
+def url_kind(url):
+    return 'search' if any(pat in url for pat in SEARCH_PATTERNS) else 'product'
+
+
+def _amounts_from_text(text):
+    """Importes en euros de un texto ya plano (markdown del lector)."""
+    out = []
+    for raw in re.findall(r'(\d{1,3}(?:[.\s]\d{3})*(?:,\d{2}|\.\d{2}))\s*(?:€|EUR)', text, re.I):
+        value = _to_float(raw)
+        if value and 0.2 < value < 5000:
+            out.append(value)
+    return out
+
+
+def read_price_via_reader(url, expected):
+    """Último recurso: leer la página renderizada y quedarse con el importe más plausible.
+
+    `expected` es el precio que ya teníamos: lo usamos solo para desempatar entre varios
+    importes de la página (gastos, variantes, ofertas por volumen), no para inventar.
+    """
+    try:
+        res = requests.get(READER_BASE + url, headers=HEADERS, timeout=45)
+        if res.status_code != 200:
+            print(f"  -> lector HTTP {res.status_code}")
+            return None
+        amounts = _amounts_from_text(res.text)
+    except Exception as e:
+        print(f"  -> lector error: {e}")
+        return None
+
+    if not amounts:
+        return None
+    if expected:
+        close = [a for a in amounts if abs(a - expected) / expected <= 0.4]
+        if not close:
+            print(f"  -> lector ve {amounts} pero nada cerca de {expected}: no confirmamos")
+            return None
+        return min(close, key=lambda a: abs(a - expected))
+    return amounts[0]
 
 
 def _to_float(text):
@@ -120,36 +166,43 @@ PARSERS = [
 
 
 def scrape_url(url):
-    """Devuelve el precio leído hoy, o None si no lo hemos podido ver."""
+    """Devuelve (precio, cómo) o (None, motivo)."""
     print(f"🔗 Analizando: {url}...")
     if is_blocked(url):
         print("  -> Sitio protegido (bot-detection). NO damos el precio por verificado.")
-        return None
+        return None, 'blocked'
 
     try:
         res = requests.get(url, headers=HEADERS, timeout=15)
         if res.status_code != 200:
-            print(f"  -> HTTP {res.status_code}")
-            return None
+            return None, f'http{res.status_code}'
         soup = BeautifulSoup(res.text, 'html.parser')
     except Exception as e:
         print(f"❌ Error en {url}: {e}")
-        return None
+        return None, 'error'
 
     for domain, parser in PARSERS:
         if domain in url:
             price = parser(soup)
             if price:
-                return price
+                return price, 'selector'
             break
 
-    return extract_jsonld(soup) or extract_generic(soup)
+    price = extract_jsonld(soup)
+    if price:
+        return price, 'jsonld'
+    price = extract_generic(soup)
+    if price:
+        return price, 'generic'
+    return None, 'notfound'
 
 
-def mark(p, state, attempt):
-    """state: live (precio visto) | stale (no detectado) | blocked (tienda protegida)."""
+def mark(p, state, attempt, source=None):
+    """state: live | stale | blocked | search. source: selector | jsonld | generic | reader."""
     p['price_state'] = state
     p['check_attempt'] = attempt
+    if source:
+        p['price_source'] = source
 
 
 def main():
@@ -165,7 +218,7 @@ def main():
     total = sum(len(v) for v in data.values())
     print(f"✅ Cargados {len(data)} materiales ({total} ofertas) desde {INPUT_FILE}")
 
-    live = stale = blocked = moved = 0
+    live = stale = blocked = moved = searched = 0
 
     for material, products in data.items():
         print(f"\n📦 {material}")
@@ -176,6 +229,14 @@ def main():
                 stale += 1
                 continue
 
+            # Una búsqueda o una categoría no tiene UN precio: no la damos por verificada.
+            if url_kind(url) == 'search':
+                print(f"  🔎 {p['provider']}: es una búsqueda/categoría, no una ficha de producto")
+                mark(p, 'search', TODAY)
+                p['search_note'] = 'La URL apunta a resultados, no a una ficha: el precio es orientativo.'
+                searched += 1
+                continue
+
             if is_blocked(url):
                 print(f"  ⛔ {p['provider']}: tienda protegida, precio NO verificado")
                 mark(p, 'blocked', TODAY)
@@ -183,19 +244,24 @@ def main():
                 continue
 
             old_price = p.get('price')
-            new_price = scrape_url(url)
+            new_price, how = scrape_url(url)
+
+            if new_price is None:
+                # Segundo intento: lector que renderiza JS y salva el anti-bot básico.
+                new_price = read_price_via_reader(url, old_price)
+                how = 'reader'
 
             if new_price is not None and new_price > 0:
                 if old_price and abs(new_price - old_price) > 0.005:
-                    print(f"  ✅ {p['provider']}: {old_price} → {new_price} €")
+                    print(f"  ✅ {p['provider']}: {old_price} → {new_price} € ({how})")
                     moved += 1
                 else:
-                    print(f"  ✔  {p['provider']}: {new_price} € confirmado")
+                    print(f"  ✔  {p['provider']}: {new_price} € confirmado ({how})")
                 p['price'] = new_price
                 p['priceStr'] = f"{str(new_price).replace('.', ',')} €"
                 # query_date = fecha en la que HEMOS VISTO este precio. Solo aquí se toca.
                 p['query_date'] = TODAY
-                mark(p, 'live', TODAY)
+                mark(p, 'live', TODAY, how)
                 live += 1
             else:
                 print(f"  ⚠️  {p['provider']}: sin detección, conserva el último precio visto")
@@ -204,7 +270,8 @@ def main():
 
             time.sleep(1.5)
 
-    print(f"\n📊 Resumen: verificados {live} · protegidos {blocked} · sin detectar {stale} · precios cambiados {moved}")
+    print(f"\n📊 Resumen: verificados {live} · protegidos {blocked} · sin detectar {stale} · "
+          f"busquedas sin ficha {searched} · precios cambiados {moved}")
 
     print(f"\n💾 Guardando {OUTPUT_JSON}...")
     with open(OUTPUT_JSON, "w", encoding='utf-8') as f:
