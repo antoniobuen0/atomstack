@@ -9,10 +9,11 @@
             "vat_included": true,
             "specs": "3mm, Pack 10 u., 30x20cm",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
             "provider": "CNC Barato / Maturas",
@@ -23,10 +24,11 @@
             "vat_included": true,
             "specs": "3mm, Formato A3",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 4.95,
             "free_shipping_min": 50,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Paulownia Wood": [
@@ -39,24 +41,26 @@
             "vat_included": true,
             "specs": "2mm, Pack 5 u.",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
             "provider": "Esteba",
             "name": "Tablero alistonado monocapa Paulownia 2400x1200x13mm",
             "url": "https://www.esteba.com/es/tableros-alistonados-paulownia",
             "price": 70.02,
-            "priceStr": "70,02 € / tablero",
+            "priceStr": "70,02 €",
             "vat_included": true,
             "specs": "Alistonado paulownia, 2400x1200x13mm",
             "query_date": "2026-09-27",
-            "price_state": "stale",
+            "price_state": "live",
             "shipping_cost": null,
             "free_shipping_min": null,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "price_source": "reader"
         }
     ],
     "Cork Wood": [
@@ -113,10 +117,11 @@
             "vat_included": true,
             "specs": "Pack 20 rodajas naturales",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Bamboo": [
@@ -132,21 +137,23 @@
             "price_state": "live",
             "shipping_cost": null,
             "free_shipping_min": 50,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "price_source": "jsonld"
         },
         {
             "provider": "RegaloPubliciad / similar B2B",
             "name": "Tabla de cortar de bambú personalizable por láser",
             "url": "https://www.regalopublicidad.com/hogar/articulos-cocina-personalizados/tablas-cortar/tabla-cortar-bambu-personalizable-laser",
-            "price": 15,
-            "priceStr": "Contactar para lote",
+            "price": 2.3,
+            "priceStr": "2,3 €",
             "vat_included": true,
             "specs": "Tabla bambú 20,7x14,7cm, personalizable por grabado láser",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "live",
             "shipping_cost": null,
             "free_shipping_min": null,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "price_source": "jsonld"
         }
     ],
     "Acrylic": [
@@ -168,15 +175,16 @@
             "provider": "Rotulos24",
             "name": "Metacrilato a medida 3mm Negro OPACO Cast",
             "url": "https://www.rotulos24.com/placas-metacrilato-a-medida",
-            "price": 35,
-            "priceStr": "35,00 € / m²",
+            "price": 35.0,
+            "priceStr": "35,0 €",
             "vat_included": true,
             "specs": "3mm, Colada, Precio por metro cuadrado",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "live",
             "shipping_cost": 6,
             "free_shipping_min": null,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "price_source": "reader"
         }
     ],
     "Ceramic Tile": [
@@ -219,10 +227,11 @@
             "vat_included": true,
             "specs": "Pack 50–100 hojas A4, ~300 g/m²",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Office Paper": [
@@ -235,10 +244,11 @@
             "vat_included": true,
             "specs": "500 hojas A4 80 g/m²",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
             "provider": "Carrefour Online",
@@ -249,10 +259,11 @@
             "vat_included": true,
             "specs": "500 hojas A4 80 g/m²",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": null,
             "free_shipping_min": null,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Oil Painting Paper": [
@@ -265,7 +276,7 @@
             "vat_included": true,
             "specs": "Bloc 24x33cm 10 hojas",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "stale",
             "shipping_cost": 4.9,
             "free_shipping_min": 50,
             "check_attempt": "2026-09-27"
@@ -297,10 +308,11 @@
             "vat_included": true,
             "specs": "Aprox 1 kg, curtido sin cromo (seguro láser)",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Stainless Steel Sheet": [
@@ -329,7 +341,7 @@
             "vat_included": true,
             "specs": "Corte y pulido borde láser",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "stale",
             "shipping_cost": 6.5,
             "free_shipping_min": 100,
             "check_attempt": "2026-09-27"
@@ -377,10 +389,11 @@
             "vat_included": true,
             "specs": "Set 4 piezas",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Alumina": [
@@ -409,10 +422,11 @@
             "vat_included": true,
             "specs": "30x20cm, 5 piezas",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Denim": [
@@ -425,7 +439,7 @@
             "vat_included": true,
             "specs": "Ideal grabado láser desgastado",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "stale",
             "shipping_cost": 4.5,
             "free_shipping_min": 50,
             "check_attempt": "2026-09-27"
@@ -487,24 +501,26 @@
             "vat_included": true,
             "specs": "A4, pack 10, compatible corte láser",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
             "provider": "Laser Project",
             "name": "DM rechapado específico láser",
             "url": "https://www.laserproject.es/tienda/",
-            "price": 15,
-            "priceStr": "Variable por formato",
+            "price": 16.18,
+            "priceStr": "16,18 €",
             "vat_included": true,
             "specs": "DM/DM rechapado en varios formatos, optimizado para láser",
             "query_date": "2026-09-27",
-            "price_state": "stale",
+            "price_state": "live",
             "shipping_cost": null,
             "free_shipping_min": null,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "price_source": "reader"
         }
     ],
     "Galvanized Iron": [
@@ -533,10 +549,11 @@
             "vat_included": true,
             "specs": "Pack 20 piedras de río, 5-8cm",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Crystal Stone": [
@@ -549,7 +566,7 @@
             "vat_included": true,
             "specs": "Slices pulidos 4-6cm",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "stale",
             "shipping_cost": 4,
             "free_shipping_min": 50,
             "check_attempt": "2026-09-27"
@@ -595,10 +612,11 @@
             "vat_included": true,
             "specs": "Varios tamaños, FR4 cobreado",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "High Density Foam Board": [
@@ -611,10 +629,11 @@
             "vat_included": true,
             "specs": "5mm, pack 10 hojas A3",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
             "provider": "SelfPaper",
@@ -671,10 +690,11 @@
             "vat_included": true,
             "specs": "Kits 1kg para coladas, varias marcas",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Artificial Beef Bone": [
@@ -687,10 +707,11 @@
             "vat_included": true,
             "specs": "Piezas pequeñas cortables/grabables",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Rubber": [
@@ -749,10 +770,11 @@
             "vat_included": true,
             "specs": "Para posavasos grabados",
             "query_date": "2026-09-27",
-            "price_state": "blocked",
+            "price_state": "search",
             "shipping_cost": 0,
             "free_shipping_min": 29,
-            "check_attempt": "2026-09-27"
+            "check_attempt": "2026-09-27",
+            "search_note": "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
     "Cobblestone": [
