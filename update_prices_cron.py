@@ -282,10 +282,12 @@ def main():
             old_price = p.get('price')
             new_price, how = scrape_url(url)
 
-            if new_price is None:
-                # Segundo intento: lector que renderiza JS y salva el anti-bot básico.
-                new_price = read_price_via_reader(url, old_price)
-                how = 'reader'
+            if new_price is None and how != 'dead':
+                # Solo si el lector trae algo cambiamos el motivo: si no, 'blocked'/'dead'/'notfound'
+                # es la información honesta de por qué no hay precio.
+                read = read_price_via_reader(url, old_price)
+                if read is not None:
+                    new_price, how = read, 'reader'
 
             if new_price is not None and new_price > 0:
                 # Un salto grande no es una actualización: puede que la página exponga el
