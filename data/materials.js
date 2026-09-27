@@ -18,27 +18,7 @@ const MATERIAL_META = {
             sourceIds: ['lbForumPsiRecs']
         }]
     },
-    'Birch Plywood': {
-        cat: 'wood', es: 'Contrachapado de abedul', en: 'Birch plywood',
-        communityPresets: [
-            {
-                software: 'LightBurn', process: 'Cutting', thicknessMm: 3, power: '85 %',
-                speed: '420 mm/min', interval: '-', passes: 2, imageMode: '-', airAssist: 'on',
-                resultEs: 'Corte limpio en 2 pasadas; a 1 pasada no atraviesa y chamusca.',
-                resultEn: 'Clean cut in 2 passes; a single pass doesn\'t go through and chars.',
-                sourceIds: ['lasertinkererBirch'], opticalW: 20, tech: 'diode',
-                authorKind: 'blog', sourceDate: '2026-06-26'
-            },
-            {
-                software: 'LightBurn', process: 'Cutting', thicknessMm: 6, power: '100 %',
-                speed: '420 mm/min', interval: '-', passes: '3–4', imageMode: '-', airAssist: 'on',
-                resultEs: 'Multipasada con 15–30 s de pausa entre pasadas para que suelte el carbón.',
-                resultEn: 'Multi-pass with a 15–30 s pause between passes to shed char.',
-                sourceIds: ['lasertinkererBirch'], opticalW: 20, tech: 'diode',
-                authorKind: 'blog', sourceDate: '2026-06-26'
-            }
-        ]
-    },
+    'Birch Plywood': { cat: 'wood', es: 'Contrachapado de abedul', en: 'Birch plywood' },
 
     // ---------- Plásticos ----------
     'Acrylic': {
@@ -52,7 +32,7 @@ const MATERIAL_META = {
     },
     'Plastic': {
         cat: 'plastic',
-        safety: { level: 'caution', es: '"Plástico" no es un material: identifica el polímero antes de grabar. PVC, policarbonato y ABS son peligrosos.', en: '"Plastic" is not a material: identify the polymer before engraving. PVC, polycarbonate and ABS are hazardous.', sourceIds: ['manualsPlusAceV2'] }
+        safety: { level: 'caution', provenance: 'pending', es: '"Plástico" no es un material: identifica el polímero antes de grabar. PVC, policarbonato y ABS son peligrosos.', en: '"Plastic" is not a material: identify the polymer before engraving. PVC, polycarbonate and ABS are hazardous.', sourceIds: ['manualsPlusAceV2'] }
     },
     'Two Color Plate': { cat: 'plastic' },
     'High Density Foam Board': { cat: 'plastic' },
@@ -66,11 +46,11 @@ const MATERIAL_META = {
     // ---------- Metales ----------
     'Stainless Steel Sheet': {
         cat: 'metal',
-        safety: { level: 'caution', es: 'El metal pulido refleja 455 nm: el haz rebota hacia ti y hacia la óptica. Solo marcado, y en acabado oscuro o cepillado.', en: 'Polished metal reflects 455 nm: the beam bounces back at you and at the optics. Marking only, on dark or brushed finishes.', sourceIds: ['laserEngraverExpertReview'] }
+        safety: { level: 'caution', provenance: 'pending', es: 'El metal pulido refleja 455 nm: el haz rebota hacia ti y hacia la óptica. Con un diodo solo cabe marcar, y en acabado oscuro o cepillado.', en: 'Polished metal reflects 455 nm: the beam bounces back at you and at the optics. On a diode, marking only, on dark or brushed finishes.', sourceIds: ['laserEngraverExpertReview'] }
     },
     'Mirror Stainless Steel': { cat: 'metal' },
     'Brushed Stainless Steel': { cat: 'metal' },
-    'Galvanized Iron': { cat: 'metal', safety: { level: 'caution', es: 'El recubrimiento de zinc desprende humos metálicos al quemarse: extracción forzada y no quedarse delante.', en: 'The zinc coating gives off metallic fumes when burned: extract the air and don\'t stand in front of it.', sourceIds: ['manualsPlusAceV2'] } },
+    'Galvanized Iron': { cat: 'metal', safety: { level: 'caution', provenance: 'pending', es: 'El recubrimiento de zinc desprende humos metálicos al quemarse: extracción forzada y no quedarse delante.', en: 'The zinc coating gives off metallic fumes when burned: extract the air and don\'t stand in front of it.', sourceIds: ['manualsPlusAceV2'] } },
     'Iron Sheet': { cat: 'metal' },
     'PCB Board': { cat: 'metal' },
 
@@ -88,7 +68,11 @@ const MATERIAL_META = {
     // ---------- Textil y piel ----------
     'Leather': {
         cat: 'leather',
-        safety: { level: 'caution', es: 'Solo piel curtida vegetal (veg-tan). La curtida al cromo desprende humos tóxicos al láser.', en: 'Veg-tanned leather only. Chrome-tanned leather releases toxic fumes under a laser.', sourceIds: ['bonnyCreationsA20'] }
+        safety: {
+            level: 'caution', provenance: 'pending', sourceIds: [],
+            es: 'Repetido en la comunidad pero sin documento que hayamos podido leer: se recomienda piel curtida vegetal (veg-tan) y se desaconseja la curtida al cromo por sus humos. Si tienes el manual de AtomStack delante, confírmalo y lo marcamos como verificado.',
+            en: 'Widely repeated but we have not read a document saying it: veg-tanned leather is recommended and chrome-tanned discouraged for its fumes. If you have the AtomStack manual at hand, confirm it and we mark it verified.'
+        }
     },
     'Denim': { cat: 'textile' },
 
@@ -108,43 +92,58 @@ const CATEGORIES = {
     other: { es: 'Otros', en: 'Other', icon: '📦' }
 };
 
-// Materiales incompatibles con un diodo de 455 nm (aviso global, pestaña Fuentes)
+// Materiales incompatibles con un diodo de 455 nm (aviso global, pestaña Fuentes).
+// provenance: 'pending' = conocimiento extendido en la comunidad que AÚN no hemos podido
+// citar contra un documento leído. El manual oficial (manualsPlusAceV2) es donde está la
+// lista, pero su PDF bloqueó el acceso automático: lo enlazamos como "donde comprobarlo".
 const PROHIBITED_GLOBAL = [
     {
-        nameEs: 'PVC / vinilo', nameEn: 'PVC / vinyl', level: 'forbidden',
-        whyEs: 'Al quemarse libera cloro: corroe la máquina en horas y genera gas tóxico. Nunca en un láser, diodo incluido.',
-        whyEn: 'Burning releases chlorine: it corrodes the machine within hours and produces toxic gas. Never in any laser, diode included.',
-        sourceIds: ['manualsPlusAceV2']
+        nameEs: 'PVC / vinilo', nameEn: 'PVC / vinyl', level: 'forbidden', provenance: 'verified',
+        whyEs: 'Al arder forma cloruro de hidrógeno, que con cualquier humedad se vuelve ácido clorhídrico: corroe la máquina y ataca las vías respiratorias. El CDC fija un techo laboral de 5 ppm y Cal Poly lo lista como material prohibido en cortadora láser.',
+        whyEn: 'Burning forms hydrogen chloride, which becomes hydrochloric acid in any moisture: it corrodes the machine and attacks the airways. CDC sets a 5 ppm occupational ceiling and Cal Poly lists PVC as prohibited in laser cutters.',
+        sourceIds: ['cdcHcl', 'calPolyProhibited']
     },
     {
-        nameEs: 'Policarbonato / Makrolon', nameEn: 'Polycarbonate / Makrolon', level: 'forbidden',
-        whyEs: 'Se funde, arde y desprende humos; no llega a cortar limpio con un diodo.',
-        whyEn: 'It melts, ignites and fumes; it never cuts cleanly on a diode.',
-        sourceIds: ['manualsPlusAceV2']
+        nameEs: 'Policarbonato / Lexan', nameEn: 'Polycarbonate / Lexan', level: 'forbidden', provenance: 'verified',
+        whyEs: 'Moderadores del foro de LightBurn y la lista de Cal Poly lo excluyen: funde en vez de vaporizarse con humos muy desagradables. Ojo con el conflicto: la tabla oficial del módulo de 30 W de AtomStack sí trae una fila de policarbonato.',
+        whyEn: 'LightBurn forum moderators and Cal Poly\'s list exclude it: it melts rather than vaporises, with very unpleasant fumes. Note the conflict: AtomStack\'s own 30 W module table does carry a polycarbonate row.',
+        sourceIds: ['lbForumPlastics', 'calPolyProhibited', 'atomstackMaterialListX30']
     },
     {
-        nameEs: 'ABS', nameEn: 'ABS', level: 'forbidden',
-        whyEs: 'Funde y arde en lugar de grabarse, con humos irritantes.',
-        whyEn: 'It melts and burns instead of engraving, with irritating fumes.',
-        sourceIds: ['manualsPlusAceV2']
+        nameEs: 'ABS', nameEn: 'ABS', level: 'forbidden', provenance: 'verified',
+        whyEs: '«ABS does not cut well in a laser cutter» y emite cianuro de hidrógeno, según los moderadores del hilo de referencia. Funde, prende con facilidad y el humo no es asumible.',
+        whyEn: '"ABS does not cut well in a laser cutter" and it emits hydrogen cyanide, per the moderators in the reference thread. It melts, ignites easily and the fumes are not acceptable.',
+        sourceIds: ['lbForumAbs']
     },
     {
-        nameEs: 'Fibra de vidrio / epoxi (FR4)', nameEn: 'Fibreglass / epoxy (FR4)', level: 'forbidden',
-        whyEs: 'Humos de resina y partículas de vidrio en suspensión.',
-        whyEn: 'Resin fumes and airborne glass particulates.',
-        sourceIds: ['manualsPlusAceV2']
+        nameEs: 'PTFE / teflón, siliconas y cualquier plástico sin identificar', nameEn: 'PTFE / teflon, silicone and any unlabelled plastic', level: 'forbidden', provenance: 'verified',
+        whyEs: 'Si no sabes qué polímero es, no puedes predecir qué se desprende al quemarlo. Empieza por el código de resina de la pieza.',
+        whyEn: 'If you can\'t name the polymer, you can\'t predict what it releases when burned. Start from the resin code on the part.',
+        sourceIds: ['lbForumAbs', 'lbForumPlastics', 'calPolyProhibited']
     },
     {
-        nameEs: 'Acrílico transparente', nameEn: 'Clear acrylic', level: 'useless',
-        whyEs: 'No es tóxico: es ineficaz. El 455 nm lo atraviesa sin depositar energía.',
-        whyEn: 'Not toxic, just ineffective: 455 nm passes straight through without depositing energy.',
-        sourceIds: ['laserEngraverExpertReview', 'atomstackOfficialV2']
+        nameEs: 'FR4 / PCB, fibra de vidrio, carbono y resinas', nameEn: 'FR4 / PCB, fibreglass, carbon fibre and resins', level: 'forbidden', provenance: 'verified',
+        whyEs: 'Ablar vidrio/epoxi suelta polvo respirable y humos de resina. Quienes lo hacen en el foro lo hacen con dos extracciones, sin fiarse de la máquina.',
+        whyEn: 'Ablating glass/epoxy releases respirable dust and resin fumes. The forum users who do it run two extractors rather than trusting the machine.',
+        sourceIds: ['lbForumPcb', 'nioshSilica']
     },
     {
-        nameEs: 'Cualquier material clorado o con ignífugos', nameEn: 'Any chlorinated or flame-retardant material', level: 'caution',
-        whyEs: 'Si no identificas el polímero, no lo grabes. La lista del manual de AtomStack es la referencia; nos falta leerla en mano (el PDF bloquea el acceso automático).',
-        whyEn: 'If you can\'t identify the polymer, don\'t engrave it. The AtomStack manual list is the reference; we still need a human to read it (the PDF blocks automated access).',
-        sourceIds: ['manualsPlusAceV2']
+        nameEs: 'Acrílico transparente, PET y mylar', nameEn: 'Clear acrylic, PET and mylar', level: 'useless', provenance: 'verified',
+        whyEs: 'No es toxicidad, es física: midieron que el mylar absorbe ~16 % del 445 nm. El haz lo atraviesa y quema lo de debajo (mesa, cartón), así que "no ha marcado" no significa "no ha pasado nada".',
+        whyEn: 'Not toxicity but physics: mylar was measured absorbing only ~16 % of 445 nm. The beam carries through and burns whatever is underneath (bed, card), so "it didn\'t mark" is not "nothing happened".',
+        sourceIds: ['lbForumMylar', 'atomstackOfficialV2']
+    },
+    {
+        nameEs: 'Piedra, pizarra, cerámica y alúmina (polvo)', nameEn: 'Stone, slate, ceramic and alumina (dust)', level: 'caution', provenance: 'verified',
+        whyEs: 'Son grabables —la pizarra da muy buen resultado— pero el polvo que levantan es sílice cristalina respirable, carcinógeno ocupacional confirmado, con límite NIOSH de 0,05 mg/m³ y mascarilla N95 como control mínimo. Un chasis abierto no contiene ese polvo.',
+        whyEn: 'These do engrave — slate gives excellent results — but the dust is respirable crystalline silica, a confirmed occupational carcinogen, with a NIOSH limit of 0.05 mg/m³ and an N95 as the minimum control. An open frame contains none of it.',
+        sourceIds: ['nioshSilica', 'lbForumSlate20w']
+    },
+    {
+        nameEs: 'Hierro galvanizado (humos de zinc)', nameEn: 'Galvanized iron (zinc fumes)', level: 'caution', provenance: 'verified',
+        whyEs: 'La propia tabla de AtomStack invita a grabar "Galvanized Iron" al 80 % y 1000 mm/min, pero calentar el recubrimiento de zinc libera óxidos metálicos recién formados: es la causa clásica de la fiebre de humos metálicos, un cuadro pseudogripal.',
+        whyEn: 'AtomStack\'s own table invites you to engrave "Galvanized Iron" at 80 % and 1000 mm/min, but heating the zinc coating releases freshly formed metal oxides: the classic cause of metal fume fever, a flu-like illness.',
+        sourceIds: ['awsMetalFume', 'atomstackOfficialPresetTable']
     }
 ];
 
@@ -226,15 +225,6 @@ addCommunityPresets('Leather', [
         resultEs: 'Tabla oficial de grabado; data.js dice 60 % a 20000 mm/min con Stucki.',
         resultEn: 'Official engraving table; data.js says 60 % at 20000 mm/min with Stucki.',
         sourceIds: OFFICIAL_ENGRAVE, ...SAME_BOX
-    },
-    {
-        software: 'LightBurn', process: 'Cutting', thicknessMm: 3, power: '85–95 %', speed: '2500 mm/min',
-        interval: '-', passes: 2, imageMode: '-', airAssist: 'on',
-        resultEs: 'Recomiendan subir pasadas antes que potencia para no chamuscar. Solo piel vegetal.',
-        resultEn: 'They advise adding passes rather than power to avoid scorching. Veg-tan only.',
-        sourceIds: ['bonnyCreationsA20'], opticalW: 20, tech: 'diode', authorKind: 'blog', sourceDate: null,
-        caveatEs: 'Agregador sin fecha y con fuentes ya no verificables: 2500 mm/min es optimista frente a lo medido en 20 W.',
-        caveatEn: 'Undated aggregator whose sources are no longer verifiable: 2500 mm/min is optimistic against what 20 W actually measures.'
     }
 ]);
 
@@ -345,12 +335,75 @@ addCommunityPresets('Chipboard', [
         interval: '-', passes: 1, imageMode: '-', airAssist: 'on, 40 psi',
         resultEs: 'Sin olor en el taller y muy poco humo; se limpia con papel seco.',
         resultEn: 'No odour in the shop and very little smoke; wipes clean with a dry paper towel.',
-        sourceIds: ['lbForumX20CuttingAbility'], opticalW: 20, tech: 'diode', authorKind: 'forum-user', sourceDate: '2023-04-30'
+        sourceIds: ['lbForumChipboard'], opticalW: 60, tech: 'co2', authorKind: 'forum-user', sourceDate: '2023-04-30',
+        caveatEs: 'OJO: obtenido en una CO₂ de 60 W, no en un diodo. Es referencia de resultado, no de velocidad: 12000 mm/min no es alcanzable en tu máquina.',
+        caveatEn: 'Careful: obtained on a 60 W CO2, not a diode. It is a result reference, not a speed: 12000 mm/min is not reachable on your machine.'
     }
 ]);
 
+/* ---- Presets medidos por usuarios, con su máquina declarada ---- */
+addCommunityPresets('Rubber', [
+    {
+        software: 'LightBurn', process: 'Engraving', thicknessMm: '-', power: 'Máx 30 % / Mín 25 %', speed: '2000 mm/min',
+        interval: '0.05 (500 DPI)', passes: 'sin declarar', imageMode: 'sin declarar', airAssist: 'sin declarar',
+        resultEs: 'Fallo honesto y útil: «el interior de las letras queda muy irregular y se ven las líneas donde pasó el láser». La respuesta de LSS: «no es posible dejar una superficie l como un espejo con ningún láser sobre un material como la goma».',
+        resultEn: 'An honest, useful failure: "the inside of the letters look very uneven and you can see the lines where the laser ran across". LSS\'s reply: "it\'s not possible to have a mirror smooth surface with any laser on a material like rubber".',
+        sourceIds: ['lbForumRubber20w'], opticalW: 20, tech: 'diode', authorKind: 'forum-user', sourceDate: '2024-05-30',
+        caveatEs: 'xTool D1 Pro de 20 W: misma potencia que la tuya, óptica distinta.', caveatEn: 'xTool D1 Pro at 20 W: same power as yours, different optics.'
+    }
+]);
+
+addCommunityPresets('Slate', [
+    {
+        software: 'LightBurn', process: 'Engraving', thicknessMm: '-', power: 'Máx 19 % (antes 16,5 %)', speed: '2700 mm/min',
+        interval: '0.08 (254 DPI)', passes: 1, imageMode: 'Stucki', airAssist: 'on',
+        resultEs: 'Diario de ajuste real en pizarra: primero a 300 mm/min y 16,5 % con 312 DPI tardó 6 horas sin resultado; luego salía como un negativo; y acabó contento a 3000 mm/min, 16,5 %, 240 DPI con Stucki.',
+        resultEn: 'A genuine tuning diary on slate: first at 300 mm/min and 16.5 % with 312 DPI it took over 6 hours for nothing; then it came out like a negative; and it ended happy at 3000 mm/min, 16.5 %, 240 DPI with Stucki.',
+        sourceIds: ['lbForumSlate20w'], opticalW: 20, tech: 'diode', authorKind: 'forum-user', sourceDate: '2025-11-10',
+        caveatEs: 'Atomstack S20 Pro: el mismo módulo de 20 W que AtomStack declara para tu familia. De lo más transferible que hay en foto sobre piedra. Mascarilla: es polvo de sílice.',
+        caveatEn: 'Atomstack S20 Pro: the same 20 W module AtomStack declares for your family. The most transferable photo-on-stone recipe there is. Mask up: it is silica dust.'
+    }
+]);
+
+addCommunityPresets('Mirror Stainless Steel', [
+    {
+        software: 'LightBurn', process: 'Marking', thicknessMm: '-', power: '100 %', speed: 'sin cifra en mm/min',
+        interval: '0.010', passes: 4, imageMode: 'sin declarar', airAssist: 'sin declarar',
+        resultEs: 'Fracaso total: «no consiguió ni una sola marca». Respuestas del hilo: hace falta spray de marcado, y «no puedes marcar acero con un diodo pequeño de 20 W». Además avisa del rebote: la radiación reflejada puede romper el propio láser.',
+        resultEn: 'Total failure: "did not have a single scratch". Replies in the thread: you need a marking spray, and "you can\'t mark steel with a tiny 20W laser diode". It also warns that reflected radiation can break the laser itself.',
+        sourceIds: ['lbForumStainlessFail'], opticalW: 20, tech: 'diode', authorKind: 'forum-user', sourceDate: '2021-04-25',
+        caveatEs: 'Contradice directamente la fila de la wiki oficial para acero inoxidable espejo: ahí dice 80 % y 600 mm/min como si funcionara.',
+        caveatEn: 'Contradicts the official wiki row for mirror stainless outright, which gives 80 % and 600 mm/min as if it worked.'
+    }
+]);
+
+addCommunityPresets('Anodized Aluminium', [
+    {
+        software: 'LightBurn', process: 'Engraving', thicknessMm: '-', power: '90 %', speed: '1400 mm/min',
+        interval: 'sin declarar', passes: 'sin declarar', imageMode: 'sin declarar', airAssist: 'sin declarar',
+        resultEs: 'Aluminio 6161-T3 con revestimiento negro: resultado aceptable tras una pasada de práctica. El mismo usuario perdió el tiempo intentándolo en aluminio desnudo (marca tenue) y se pasó a abedul.',
+        resultEn: 'Black-coated 6161-T3 aluminium: acceptable results after a practice run. The same user wasted time on bare aluminium (faint mark) and moved to birch.',
+        sourceIds: ['lbForumA20Aluminium'], opticalW: 20, tech: 'diode', authorKind: 'forum-user', sourceDate: '2023-08-22',
+        caveatEs: 'A20 Pro, predecesor directo del tuyo: la coincidencia de máquina más cercana del dataset. En metal desnudo no espere marca.',
+        caveatEn: 'A20 Pro, your direct predecessor: the closest machine match in the dataset. On bare metal, expect no mark.'
+    },
+    {
+        software: 'LightBurn', process: 'Engraving', thicknessMm: '-', power: '85 %', speed: '2000 mm/min',
+        interval: 'sin declarar', passes: 'sin declarar', imageMode: 'sin declarar', airAssist: 'sin declarar',
+        resultEs: 'Tarjetas de aluminio anodizado grabadas «con éxito con módulos de 5,5 W y 11 W ÓPTICOS». Avisan de que las tarjetas se curvan por el calor.',
+        resultEn: 'Anodised aluminium business cards engraved "successfully with 5.5W and 11W OPTICAL power". They warn the cards warp from the heat.',
+        sourceIds: ['lbForumAluCards'], opticalW: 11, tech: 'diode', authorKind: 'forum-user', sourceDate: '2026-01-16',
+        caveatEs: 'De 5,5 y 11 W: con tus 20 W baja la potencia o sube la velocidad respecto a esa cifra.',
+        caveatEn: 'From 5.5 W and 11 W modules: on your 20 W, drop power or raise speed relative to that figure.'
+    }
+]);
+
+// Etiquetas y categoría de los materiales que aporta solo la red
+MATERIAL_META['Slate'] = Object.assign({ es: 'Pizarra', en: 'Slate', cat: 'stone' }, MATERIAL_META['Slate']);
+MATERIAL_META['Anodized Aluminium'] = Object.assign({ es: 'Aluminio anodizado', en: 'Anodized aluminium', cat: 'metal' }, MATERIAL_META['Anodized Aluminium']);
+
 // Materiales que solo existen en la capa de comunidad (sin fila en data.js)
-const MATERIAL_COMMUNITY_ONLY = ['Birch Plywood', 'Cardstock', 'Chipboard'];
+const MATERIAL_COMMUNITY_ONLY = ['Birch Plywood', 'Cardstock', 'Chipboard', 'Slate', 'Anodized Aluminium'];
 
 // Cuánto te sirve un preset que viene de otra máquina.
 function transferabilityOf(opticalW, tech) {

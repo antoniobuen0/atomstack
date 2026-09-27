@@ -48,21 +48,12 @@ let currentLang = 'es'; // 'en' or 'es'
 function t(es, en) { return currentLang === 'es' ? es : en; }
 
 const TAB_LABELS = {
-    materials: { es: '🎛️ Parámetros Láser', en: '🎛️ Laser Parameters' },
-    machine: { es: '🔧 Máquina', en: '🔧 Machine' },
-    techniques: { es: '🧭 Usos', en: '🧭 Use cases' },
-    sources: { es: '🔗 Fuentes', en: '🔗 Sources' },
-    products: { es: '📦 Tienda Insumos', en: '📦 Supplies Store' },
-    providers: { es: '🏪 Proveedores', en: '🏪 Suppliers' }
-};
-
-const TAB_SUBTITLES = {
-    materials: { es: 'Configuración de materiales', en: 'Material Settings' },
-    machine: { es: 'Ficha técnica verificada, con fuente en cada valor', en: 'Verified spec sheet, every value sourced' },
-    techniques: { es: 'Técnicas y usos reales, con su procedencia', en: 'Real techniques and use cases, with provenance' },
-    sources: { es: 'De dónde sale cada dato del panel', en: 'Where every number in this panel comes from' },
-    products: { es: 'Insumos por material y grosor', en: 'Supplies by material and thickness' },
-    providers: { es: 'Proveedores comparados', en: 'Comparable suppliers' }
+    materials: { es: 'Materiales', en: 'Materials' },
+    machine: { es: 'Máquina', en: 'Machine' },
+    techniques: { es: 'Usos', en: 'Use cases' },
+    sources: { es: 'Fuentes', en: 'Sources' },
+    products: { es: 'Insumos', en: 'Supplies' },
+    providers: { es: 'Tiendas', en: 'Shops' }
 };
 let currentSort = 'default';
 let rawDataRows = [];
@@ -78,12 +69,11 @@ const sortControls = document.getElementById('sort-controls');
 const langToggleBtn = document.getElementById('lang-toggle-btn');
 const langLabel = document.getElementById('lang-label');
 const exportExcelBtn = document.getElementById('export-excel-btn');
-const exportLabel = document.getElementById('export-label');
-const subtitle = document.getElementById('subtitle');
+const brandSpec = document.getElementById('brand-spec');
 const emptyState = document.getElementById('empty-state');
 const tableContainer = document.querySelector('.table-container');
 
-// Shopping panel elements
+// Panel de detalle y capa de cesta
 const shoppingPanel = document.getElementById('shopping-panel');
 const panelOverlay = document.getElementById('panel-overlay');
 const shoppingTitle = document.getElementById('shopping-title');
@@ -91,9 +81,12 @@ const closeShoppingBtn = document.getElementById('close-shopping-btn');
 const providersContainer = document.getElementById('providers-container');
 const cartContainer = document.getElementById('cart-container');
 const detailContainer = document.getElementById('detail-container');
+const detailTitle = document.getElementById('detail-title');
+const detailHint = document.getElementById('detail-hint');
+const detailBack = document.getElementById('detail-back');
+const detailSeg = document.getElementById('detail-seg');
+const appRoot = document.querySelector('.app');
 const toggleShoppingBtn = document.getElementById('toggle-shopping-btn');
-const shoppingEmptyMsg = document.getElementById('shopping-empty-msg');
-const viewCartBtn = document.getElementById('view-cart-btn');
 
 // Header Cart Elements
 const headerCartBtn = document.getElementById('header-cart-btn');
@@ -107,7 +100,6 @@ const machineView = document.getElementById('machine-view');
 const techniquesView = document.getElementById('techniques-view');
 const sourcesView = document.getElementById('sources-view');
 const storeGrid = document.getElementById('store-grid');
-const searchRow = document.querySelector('.search-bar-row');
 const filterBar = document.querySelector('.filter-bar');
 const materialFilter = document.getElementById('material-filter');
 const storeMaterialFilter = document.getElementById('store-material-filter');
@@ -116,7 +108,6 @@ const storeMaterialFilter = document.getElementById('store-material-filter');
 let activeTab = 'materials';
 
 let cart = [];
-let currentPanelView = 'catalog'; // 'catalog' | 'cart'
 let currentActiveMaterial = null;
 let detailMaterial = null;
 
@@ -249,17 +240,20 @@ function renderTable() {
             if (idx === 0) {
                 const meta = MATERIAL_META[data.materialEn];
                 const badge = materialSafetyMark(meta);
+                const mine = ownerNotes && Object.keys(ownerNotes).some(k => k.indexOf(data.materialEn + '|') === 0 && ownerNotes[k].v);
                 td.innerHTML = `<span class="row-name">${td.textContent}</span>` +
                     `<span class="row-actions">` +
-                    (badge ? `<span class="safety-mark ${badge}" title="${t('Seguridad', 'Safety')}">⚠</span>` : '') +
-                    `<button class="row-btn" title="${t('Ver detalle y fuentes', 'See detail and sources')}" aria-label="${t('Ver detalle', 'See detail')}">ⓘ</button>` +
-                    `<button class="row-btn" data-shop title="${t('Ver insumos', 'See supplies')}" aria-label="${t('Ver insumos', 'See supplies')}">🛒</button>` +
+                    (badge ? `<span class="safety-mark ${badge}" title="${t('Seguridad', 'Safety')}">●</span>` : '') +
+                    (mine ? `<span class="safety-mark mine" title="${t('Verificado por ti', 'Verified by you')}">✓</span>` : '') +
+                    `<button class="row-btn" data-shop title="${t('Ver insumos', 'See supplies')}" aria-label="${t('Ver insumos', 'See supplies')}">▤</button>` +
                     `</span>`;
             }
             tr.appendChild(td);
         });
 
-        tr.addEventListener('click', () => openMaterialDetail(data.materialEn, data.currentName));
+        tr.addEventListener('click', () => {
+            openMaterialDetail(data.materialEn, data.currentName);
+        });
         tr.querySelector('[data-shop]').addEventListener('click', (e) => {
             e.stopPropagation();
             openShoppingPanel(data.materialEn, data.currentName);
@@ -271,40 +265,42 @@ function renderTable() {
     if (typeof renderExtraMaterials === 'function') renderExtraMaterials(searchTerm);
 }
 
-function updateSubtitle() {
-    const s = TAB_SUBTITLES[activeTab] || TAB_SUBTITLES.materials;
-    subtitle.textContent = currentLang === 'es' ? s.es : s.en;
+function updateBrandSpec() {
+    if (!brandSpec) return;
+    const m = MACHINE_SPECS;
+    brandSpec.textContent = t(
+        `${m.opticalW} W ópticos · ${m.areaMm[0]} × ${m.areaMm[1]} mm · 455 nm`,
+        `${m.opticalW} W optical · ${m.areaMm[0]} × ${m.areaMm[1]} mm · 455 nm`
+    );
 }
 
 function updateUILabels() {
     Object.keys(TAB_LABELS).forEach(id => {
-        const btn = document.getElementById(`tab-${id}`);
-        if (btn) btn.textContent = currentLang === 'es' ? TAB_LABELS[id].es : TAB_LABELS[id].en;
+        const lbl = document.querySelector(`#tab-${id} .rail-lbl`);
+        if (lbl) lbl.textContent = currentLang === 'es' ? TAB_LABELS[id].es : TAB_LABELS[id].en;
     });
-    updateSubtitle();
+    updateBrandSpec();
 
     if (currentLang === 'es') {
-        langLabel.textContent = "English";
-        exportLabel.textContent = "Exportar Excel";
-        searchInput.placeholder = "Buscar material...";
-        softwareFilter.options[0].text = "Todos los Software";
-        processingFilter.options[0].text = "Todos los Procesos";
+        langLabel.textContent = "EN";
+        searchInput.placeholder = "Buscar material, técnica o fuente";
+        softwareFilter.options[0].text = "Todo software";
+        processingFilter.options[0].text = "Todo proceso";
         processingFilter.options[1].text = "Grabado";
         processingFilter.options[2].text = "Corte";
-        sortControls.options[0].text = "Orden por defecto";
-        sortControls.options[1].text = "A-Z (Ascendente)";
-        sortControls.options[2].text = "Z-A (Descendente)";
+        sortControls.options[0].text = "Orden";
+        sortControls.options[1].text = "A–Z";
+        sortControls.options[2].text = "Z–A";
     } else {
-        langLabel.textContent = "Castellano";
-        exportLabel.textContent = "Export to Excel";
-        searchInput.placeholder = "Search materials...";
-        softwareFilter.options[0].text = "All Software";
-        processingFilter.options[0].text = "All Processing";
+        langLabel.textContent = "ES";
+        searchInput.placeholder = "Search material, technique or source";
+        softwareFilter.options[0].text = "All software";
+        processingFilter.options[0].text = "All processing";
         processingFilter.options[1].text = "Engraving";
         processingFilter.options[2].text = "Cutting";
-        sortControls.options[0].text = "Default Order";
-        sortControls.options[1].text = "A-Z (Ascending)";
-        sortControls.options[2].text = "Z-A (Descending)";
+        sortControls.options[0].text = "Order";
+        sortControls.options[1].text = "A–Z";
+        sortControls.options[2].text = "Z–A";
     }
 }
 
@@ -325,8 +321,10 @@ langToggleBtn.addEventListener('click', () => {
     currentLang = currentLang === 'en' ? 'es' : 'en';
     updateUILabels();
     (TAB_VIEWS[activeTab] || TAB_VIEWS.materials).render();
-    if (detailMaterial) renderMaterialDetail();
-    if (currentPanelView === 'catalog' && currentActiveMaterial) renderShoppingOptions(currentActiveMaterial.en);
+    if (detailMaterial) {
+        renderMaterialDetail();
+        renderShoppingOptions(detailMaterial.en);
+    }
 });
 
 exportExcelBtn.addEventListener('click', () => {
@@ -385,7 +383,6 @@ window.checkout = function () {
     cart = [];
     updateCartUI();
     renderCart();
-    toggleCartView('catalog');
 }
 
 function updateCartUI() {
@@ -401,52 +398,61 @@ function updateCartUI() {
     }
 }
 
-function setPanelMode(mode) {
-    currentPanelView = mode;
-    providersContainer.style.display = mode === 'catalog' ? 'block' : 'none';
-    cartContainer.style.display = mode === 'cart' ? 'block' : 'none';
-    detailContainer.style.display = mode === 'detail' ? 'block' : 'none';
-
-    if (mode === 'cart') {
-        shoppingTitle.textContent = t('Tu Cesta', 'Your Cart');
-        viewCartBtn.innerHTML = '🔙 ' + t('Volver', 'Back');
-    } else if (mode === 'detail') {
-        shoppingTitle.textContent = detailMaterial ? detailMaterial.disp : t('Catálogo', 'Catalog');
-        viewCartBtn.innerHTML = '🛒 <span id="cart-count">' + cart.reduce((s, i) => s + i.qty, 0) + '</span>';
-    } else {
-        viewCartBtn.innerHTML = '🛒 <span id="cart-count">' + cart.reduce((s, i) => s + i.qty, 0) + '</span>';
-        if (currentActiveMaterial) {
-            shoppingTitle.textContent = t(`Precios: ${currentActiveMaterial.disp}`, `Prices: ${currentActiveMaterial.disp}`);
-        } else {
-            shoppingTitle.textContent = t('Catálogo', 'Catalog');
-        }
-    }
+/* El panel de detalle alterna dos segmentos: parámetros curados e insumos. */
+function showDetailSegment(seg) {
+    detailContainer.style.display = seg === 'params' ? 'block' : 'none';
+    providersContainer.style.display = seg === 'supplies' ? 'block' : 'none';
+    detailSeg.style.display = 'flex';
+    detailSeg.querySelectorAll('.seg-btn').forEach(b => b.classList.toggle('active', b.dataset.seg === seg));
+    if (detailHint) detailHint.style.display = 'none';
+    appRoot.classList.add('show-detail');
 }
 
-function toggleCartView(forceView) {
-    if (forceView) setPanelMode(forceView);
-    else setPanelMode(currentPanelView === 'cart' ? 'catalog' : 'cart');
-    if (currentPanelView === 'cart') renderCart();
+function closeDetail() {
+    appRoot.classList.remove('show-detail');
+    detailContainer.style.display = 'block';
+    providersContainer.style.display = 'none';
+    detailSeg.style.display = 'none';
+    detailTitle.textContent = t('Elige un material', 'Pick a material');
+    if (detailHint) detailHint.style.display = 'block';
+    detailMaterial = null;
+    document.querySelectorAll('.mat-table tr.is-open').forEach(r => r.classList.remove('is-open'));
 }
-
-viewCartBtn.addEventListener('click', () => {
-    if (currentPanelView === 'detail' && detailMaterial) {
-        openShoppingPanel(detailMaterial.en, detailMaterial.disp);
-    } else {
-        toggleCartView();
-    }
-});
 
 function openShoppingPanel(materialEn, materialNameDisp) {
-    if (!shoppingPanel.classList.contains('open')) {
-        shoppingPanel.classList.add('open');
-        panelOverlay.classList.add('visible');
-    }
-
     currentActiveMaterial = { en: materialEn, disp: materialNameDisp };
+    detailMaterial = currentActiveMaterial;
+    detailTitle.textContent = materialNameDisp;
     renderShoppingOptions(materialEn);
-    setPanelMode('catalog');
-    shoppingTitle.textContent = t(`Precios: ${materialNameDisp} (Todos los grosores)`, `Prices for: ${materialNameDisp} (All thicknesses)`);
+    showDetailSegment('supplies');
+}
+
+function openCart() {
+    shoppingTitle.textContent = t('Cesta', 'Cart');
+    cartContainer.style.display = 'block';
+    renderCart();
+    shoppingPanel.classList.add('open');
+    panelOverlay.classList.add('visible');
+}
+
+// Estado real de verificación de un precio.
+// live = leído en la tienda ese día · stale = se intentó y no se detectó
+// blocked = tienda que bloquea el scraping · unverified = nunca verificado por el bot
+function priceStateOf(opt) {
+    const s = opt.price_state || 'unverified';
+    const label = {
+        live: t('verificado', 'verified'),
+        stale: t('sin leer hoy', 'not read today'),
+        blocked: t('tienda protegida', 'shop blocks scraping'),
+        unverified: t('sin verificar', 'unverified')
+    }[s];
+    return `<span class="price-state ${s}" title="${esc(label)} · ${esc(opt.query_date || '')}">● ${label}${s === 'live' && opt.query_date ? ' ' + opt.query_date : ''}</span>`;
+}
+
+function priceCoverage() {
+    const all = Object.values(shoppingData).flat();
+    const live = all.filter(o => o.price_state === 'live').length;
+    return { total: all.length, live };
 }
 
 function renderShoppingOptions(materialEn) {
@@ -474,12 +480,12 @@ function renderShoppingOptions(materialEn) {
             <div class="shopping-provider">${opt.provider}</div>
             <div class="shopping-name">${opt.name}</div>
             <div class="shopping-specs">
-                <strong>Variedad / Grosor:</strong> ${opt.specs}<br/>
-                <small style="color:#666; font-size:10px;">
-                    🚚 ${opt.shipping_cost === 0 ? 'Envío gratis' :
-                (opt.shipping_cost ? `Envío: ${opt.shipping_cost.toFixed(2)}€` : 'Consultar envío')}
-                    ${opt.free_shipping_min ? ` (Gratis desde ${opt.free_shipping_min}€)` : ''} | 
-                    🗓️ ${opt.query_date}
+                <strong>${t('Variedad / Grosor', 'Variant / thickness')}:</strong> ${opt.specs}<br/>
+                <small class="small">
+                    ${priceStateOf(opt)} ·
+                    ${opt.shipping_cost === 0 ? t('envío gratis', 'free shipping') :
+                (opt.shipping_cost ? `${t('envío', 'shipping')}: ${opt.shipping_cost.toFixed(2)}€` : t('envío por confirmar', 'shipping unconfirmed'))}
+                    ${opt.free_shipping_min ? ` (${t('gratis desde', 'free from')} ${opt.free_shipping_min}€)` : ''}
                 </small>
             </div>
             <div class="shopping-footer">
@@ -549,15 +555,18 @@ function closeShoppingPanel() {
 closeShoppingBtn.addEventListener('click', closeShoppingPanel);
 panelOverlay.addEventListener('click', closeShoppingPanel);
 
-toggleShoppingBtn.addEventListener('click', () => {
-    shoppingPanel.classList.toggle('open');
-    panelOverlay.classList.toggle('visible');
-});
+toggleShoppingBtn.addEventListener('click', openCart);
+headerCartBtn.addEventListener('click', openCart);
 
-headerCartBtn.addEventListener('click', () => {
-    shoppingPanel.classList.add('open');
-    panelOverlay.classList.add('visible');
-    toggleCartView('cart');
+// Segmentos del panel de detalle y vuelta a la lista en móvil
+detailBack.addEventListener('click', closeDetail);
+detailSeg.querySelectorAll('.seg-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        const seg = btn.dataset.seg;
+        if (seg === 'supplies' && detailMaterial) renderShoppingOptions(detailMaterial.en);
+        if (seg === 'params' && detailMaterial) renderMaterialDetail();
+        showDetailSegment(seg);
+    });
 });
 
 // Tab Logic
@@ -575,23 +584,32 @@ window.switchTab = function (tabId) {
     if (!conf) return;
     activeTab = tabId;
 
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.querySelectorAll('.rail-btn').forEach(btn => btn.classList.remove('active'));
     document.getElementById(`tab-${tabId}`).classList.add('active');
 
     Object.values(TAB_VIEWS).forEach(c => {
         const el = document.getElementById(c.view);
         if (el) el.style.display = 'none';
     });
-    document.getElementById(conf.view).style.display = 'block';
+    // Se quita el inline para que cada vista recupere su display de la hoja (grid/flex).
+    document.getElementById(conf.view).style.display = '';
 
-    searchRow.style.display = 'block';
     filterBar.style.display = conf.filterBar ? 'flex' : 'none';
     conf.render();
-    updateSubtitle();
 };
 
 function renderStoreGrid() {
     storeGrid.innerHTML = '';
+    const cov = priceCoverage();
+    const summary = document.getElementById('price-summary');
+    if (summary) {
+        const pct = cov.total ? Math.round(cov.live / cov.total * 100) : 0;
+        summary.textContent = t(
+            `${cov.live} de ${cov.total} precios verificados en la tienda hoy (${pct} %)`,
+            `${cov.live} of ${cov.total} prices verified against the shop today (${pct} %)`
+        );
+        summary.classList.toggle('all-live', cov.live === cov.total);
+    }
     const query = searchInput.value.toLowerCase().trim();
     const selectedMat = storeMaterialFilter ? storeMaterialFilter.value : 'All';
     const uniqueMaterials = Object.keys(shoppingData);

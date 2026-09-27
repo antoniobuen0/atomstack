@@ -17,7 +17,10 @@ function materialSafetyMark(meta) {
     return (lvl === 'forbidden' || lvl === 'caution' || lvl === 'useless') ? lvl : '';
 }
 
-function srcChips(ids) {
+function srcChips(ids, provenance) {
+    if (provenance === 'pending') {
+        return `<span class="src-chips"><span class="pending-src" title="${esc(t('Afirmación repetida en la comunidad que aún no hemos contrastado con un documento leído', 'Community-repeated claim we have not yet checked against a document we could read'))}">${esc(t('sin fuente verificada', 'source unverified'))}</span></span>`;
+    }
     if (!ids || !ids.length) return '';
     return '<span class="src-chips">' + ids.map(id => {
         const s = LASER_SOURCES[id];
@@ -97,14 +100,16 @@ function officialPresetsOf(materialEn) {
 }
 
 function openMaterialDetail(materialEn, disp) {
-    if (!shoppingPanel.classList.contains('open')) {
-        shoppingPanel.classList.add('open');
-        panelOverlay.classList.add('visible');
-    }
     detailMaterial = { en: materialEn, disp: disp };
     currentActiveMaterial = detailMaterial;
-    setPanelMode('detail');
+    detailTitle.textContent = disp;
     renderMaterialDetail();
+    showDetailSegment('params');
+    document.querySelectorAll('.mat-table tr.is-open').forEach(r => r.classList.remove('is-open'));
+    const row = [...document.querySelectorAll('#table-body tr')]
+        .find(tr => tr.querySelector('.row-name') &&
+            tr.querySelector('.row-name').textContent.trim() === disp.trim());
+    if (row) row.classList.add('is-open');
 }
 
 function detailSection(title, inner, extraClass) {
@@ -169,7 +174,7 @@ function renderMaterialDetail() {
 
     if (meta.safety) {
         detailContainer.appendChild(detailSection(t('Seguridad', 'Safety'),
-            `<p class="safety ${esc(meta.safety.level)}">${esc(t(meta.safety.es, meta.safety.en))}</p>${srcChips(meta.safety.sourceIds)}`,
+            `<p class="safety ${esc(meta.safety.level)}">${esc(t(meta.safety.es, meta.safety.en))}</p>${srcChips(meta.safety.sourceIds, meta.safety.provenance)}`,
             'sec-' + esc(meta.safety.level)));
     }
 

@@ -1,176 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AtomStack A20 Pro V2 Material Settings</title>
-    <!-- Use Google Fonts -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0b0d10">
+    <title>AtomStack A20 Pro V2 · Panel</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="panel.css">
-    <!-- SheetJS for Excel export -->
+    <link rel="stylesheet" href="app.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
 </head>
 
 <body>
-    <div class="app-container">
-        <!-- MAIN CONTENT (Left side on desktop) -->
-        <div class="main-content-wrapper">
-            <header>
-                <div class="header-content">
-                    <div class="title-area">
-                        <h1>AtomStack A20 Pro V2</h1>
-                        <p class="subtitle" id="subtitle">Configuración de materiales</p>
-                    </div>
-                    <div class="controls">
-                        <button id="header-cart-btn" class="btn btn-primary" aria-label="Ver Carrito">
-                            🛒 <span id="header-cart-count">0</span> | <span id="header-cart-total">0.00 €</span>
-                        </button>
-                        <button id="export-excel-btn" class="btn btn-secondary mobile-hidden" aria-label="Exportar">
-                            <span class="icon">📊</span> <span id="export-label" style="display:none;">Exportar</span>
-                        </button>
-                        <button id="lang-toggle-btn" class="btn btn-secondary mobile-hidden"
-                            aria-label="Toggle Language">
-                            <span class="icon">🌍</span> <span id="lang-label">English</span>
-                        </button>
-                    </div>
-                </div>
+    <div class="app">
 
-                <div class="nav-tabs">
-                    <button class="tab-btn active" id="tab-materials" onclick="switchTab('materials')">🎛️ Parámetros Láser</button>
-                    <button class="tab-btn" id="tab-machine" onclick="switchTab('machine')">🔧 Máquina</button>
-                    <button class="tab-btn" id="tab-techniques" onclick="switchTab('techniques')">🧭 Usos</button>
-                    <button class="tab-btn" id="tab-sources" onclick="switchTab('sources')">🔗 Fuentes</button>
-                    <button class="tab-btn" id="tab-products" onclick="switchTab('products')">📦 Tienda Insumos</button>
-                    <button class="tab-btn" id="tab-providers" onclick="switchTab('providers')">🏪 Proveedores</button>
-                </div>
-            </header>
-
-            <div class="search-bar-row">
-                <input type="text" id="search-input" class="form-control" placeholder="Buscar material...">
-            </div>
-            <div class="filter-bar">
-                <select id="software-filter" class="form-select">
-                    <option value="All">Todos los Software</option>
-                    <option value="LightBurn">LightBurn</option>
-                    <option value="LaserGRBL">LaserGRBL</option>
-                </select>
-                <select id="processing-filter" class="form-select">
-                    <option value="All">Todos los Procesos</option>
-                    <option value="Engraving">Grabado</option>
-                    <option value="Cutting">Corte</option>
-                </select>
-                <select id="material-filter" class="form-select">
-                    <option value="All">Todos los Materiales</option>
-                </select>
-                <select id="sort-controls" class="form-select">
-                    <option value="default">Orden por defecto</option>
-                    <option value="asc">A-Z (Ascendente)</option>
-                    <option value="desc">Z-A (Descendente)</option>
-                </select>
+        <!-- Barra superior fija -->
+        <header class="topbar">
+            <div class="brand">
+                <span class="brand-mark">A</span>
+                <span class="brand-text">
+                    <strong id="brand-model">AtomStack A20 Pro V2</strong>
+                    <span class="brand-spec" id="brand-spec">20 W ópticos · 400 × 365 mm</span>
+                </span>
             </div>
 
-            <main>
-                <!-- Materials Mode -->
-                <div id="materials-view">
+            <div class="topbar-search">
+                <input type="search" id="search-input" class="search" placeholder="Buscar material, técnica o fuente"
+                    autocomplete="off" aria-label="Buscar">
+            </div>
+
+            <div class="topbar-tools">
+                <button id="lang-toggle-btn" class="ghost" aria-label="Idioma"><span id="lang-label">EN</span></button>
+                <button id="export-excel-btn" class="ghost" aria-label="Exportar a Excel" title="Exportar CSV a Excel">
+                    <span class="icon">↧</span>
+                </button>
+                <button id="header-cart-btn" class="cart-pill" aria-label="Cesta">
+                    <span>🛒</span><span id="header-cart-count">0</span>
+                    <span class="cart-total" id="header-cart-total">0,00 €</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Navegación lateral (barra inferior en móvil) -->
+        <nav class="rail" aria-label="Secciones">
+            <button class="rail-btn active" id="tab-materials" onclick="switchTab('materials')">
+                <span class="rail-ico">⚙</span><span class="rail-lbl">Materiales</span>
+            </button>
+            <button class="rail-btn" id="tab-machine" onclick="switchTab('machine')">
+                <span class="rail-ico">▣</span><span class="rail-lbl">Máquina</span>
+            </button>
+            <button class="rail-btn" id="tab-techniques" onclick="switchTab('techniques')">
+                <span class="rail-ico">◈</span><span class="rail-lbl">Usos</span>
+            </button>
+            <button class="rail-btn" id="tab-sources" onclick="switchTab('sources')">
+                <span class="rail-ico">↗</span><span class="rail-lbl">Fuentes</span>
+            </button>
+            <button class="rail-btn" id="tab-products" onclick="switchTab('products')">
+                <span class="rail-ico">▤</span><span class="rail-lbl">Insumos</span>
+            </button>
+            <button class="rail-btn" id="tab-providers" onclick="switchTab('providers')">
+                <span class="rail-ico">◫</span><span class="rail-lbl">Tiendas</span>
+            </button>
+        </nav>
+
+        <!-- Escenario: cada vista ocupa la pantalla, nunca hay scroll de página -->
+        <main class="stage">
+
+            <!-- MATERIALES: lista + detalle persistente -->
+            <section id="materials-view" class="view view-split">
+                <div class="pane pane-list">
+                    <div class="filter-bar">
+                        <select id="software-filter" class="sel">
+                            <option value="All">Todo software</option>
+                            <option value="LightBurn">LightBurn</option>
+                            <option value="LaserGRBL">LaserGRBL</option>
+                        </select>
+                        <select id="processing-filter" class="sel">
+                            <option value="All">Todo proceso</option>
+                            <option value="Engraving">Grabado</option>
+                            <option value="Cutting">Corte</option>
+                        </select>
+                        <select id="material-filter" class="sel">
+                            <option value="All">Todo material</option>
+                        </select>
+                        <select id="sort-controls" class="sel">
+                            <option value="default">Orden</option>
+                            <option value="asc">A–Z</option>
+                            <option value="desc">Z–A</option>
+                        </select>
+                    </div>
                     <div id="extra-materials"></div>
                     <div class="table-container">
-                        <table id="material-table" class="markdown-table">
+                        <table id="material-table" class="mat-table">
                             <thead>
-                                <tr id="table-head-row">
-                                    <!-- Headers dynamically inserted -->
-                                </tr>
+                                <tr id="table-head-row"></tr>
                             </thead>
-                            <tbody id="table-body">
-                                <!-- Rows dynamically inserted -->
-                            </tbody>
+                            <tbody id="table-body"></tbody>
                         </table>
                     </div>
-                    <div class="empty-state" id="empty-state" style="display: none;">
-                        <p>No se han encontrado resultados.</p>
+                    <div class="empty-state" id="empty-state" style="display:none;">
+                        <p>Sin resultados.</p>
                     </div>
                 </div>
 
-                <!-- Machine Specs Mode -->
-                <div id="machine-view" style="display: none;" class="panel-view"></div>
-
-                <!-- Techniques / Uses Mode -->
-                <div id="techniques-view" style="display: none;" class="panel-view"></div>
-
-                <!-- Sources Mode -->
-                <div id="sources-view" style="display: none;" class="panel-view"></div>
-
-                <!-- Products Store Mode -->
-                <div id="products-view" style="display: none; padding: 32px;">
-                    <div class="provider-filter-bar" style="margin-bottom:16px;">
-                        <select id="store-material-filter" class="form-select" style="max-width:280px;">
-                            <option value="All">Todos los Materiales</option>
-                        </select>
+                <div class="pane pane-detail" id="detail-pane">
+                    <div class="detail-head">
+                        <button class="back-btn" id="detail-back" aria-label="Volver a la lista">←</button>
+                        <h2 id="detail-title">Elige un material</h2>
+                        <div class="detail-seg" id="detail-seg" style="display:none;">
+                            <button class="seg-btn active" data-seg="params">Parámetros</button>
+                            <button class="seg-btn" data-seg="supplies">Insumos</button>
+                        </div>
                     </div>
-                    <div class="store-grid" id="store-grid">
-                        <!-- Product cards dynamically inserted -->
+                    <div class="detail-body" id="detail-container">
+                        <p class="hint" id="detail-hint">Toca cualquier fila para ver sus presets con la fuente de cada
+                            uno y compararlos con lo que reporta la red.</p>
                     </div>
+                    <div class="detail-body" id="providers-container" style="display:none;"></div>
                 </div>
+            </section>
 
-                <!-- Providers View -->
-                <div id="providers-view" style="display: none; padding: 32px;">
-                    <div class="provider-filter-bar">
-                        <select id="provider-material-filter" class="form-select" style="max-width:280px;">
-                            <option value="All">Todos los Materiales</option>
-                        </select>
-                    </div>
-                    <div class="providers-grid" id="providers-grid">
-                        <!-- Provider cards dynamically inserted -->
-                    </div>
-                </div>
-            </main>
-        </div> <!-- End Main Content Wrapper -->
+            <section id="machine-view" class="view view-scroll" style="display:none;"></section>
+            <section id="techniques-view" class="view view-scroll" style="display:none;"></section>
+            <section id="sources-view" class="view view-scroll" style="display:none;"></section>
 
-        <!-- Shopping List Panel (Right side on desktop) -->
-        <aside id="shopping-panel" class="shopping-panel">
-            <div class="shopping-header">
-                <div>
-                    <h2 id="shopping-title">Catálogo</h2>
+            <section id="products-view" class="view view-scroll" style="display:none;">
+                <div class="store-head">
+                    <select id="store-material-filter" class="sel">
+                        <option value="All">Todo material</option>
+                    </select>
+                    <span class="verify-summary" id="price-summary"></span>
                 </div>
-                <div class="shopping-header-actions">
-                    <button id="view-cart-btn" class="btn btn-secondary btn-sm" aria-label="Ver Carrito">🛒 <span
-                            id="cart-count">0</span></button>
-                    <button id="close-shopping-btn" class="btn-icon mobile-only"
-                        aria-label="Close Shopping Panel">&times;</button>
+                <div class="store-grid" id="store-grid"></div>
+            </section>
+
+            <section id="providers-view" class="view view-scroll" style="display:none;">
+                <div class="store-head">
+                    <select id="provider-material-filter" class="sel">
+                        <option value="All">Todo material</option>
+                    </select>
                 </div>
+                <div class="providers-grid" id="providers-grid"></div>
+            </section>
+        </main>
+
+        <!-- Cesta como capa flotante -->
+        <aside id="shopping-panel" class="cart-layer" aria-label="Cesta">
+            <div class="cart-layer-head">
+                <h2 id="shopping-title">Cesta</h2>
+                <button id="close-shopping-btn" class="ghost" aria-label="Cerrar">×</button>
             </div>
-
-            <div class="shopping-content" id="providers-container">
-                <div class="empty-shopping">
-                    <span class="icon-large">👈</span>
-                    <p id="shopping-empty-msg">Selecciona una fila de la tabla para ver opciones de compra y grosores
-                        específicos.</p>
-                </div>
-            </div>
-
-            <div class="shopping-content" id="cart-container" style="display: none;">
-                <!-- Cart items injected here -->
-            </div>
-
-            <div class="shopping-content" id="detail-container" style="display: none;">
-                <!-- Material detail injected here -->
-            </div>
+            <div class="shopping-content" id="cart-container"></div>
         </aside>
-
-        <!-- Shopping Cart Button (Floating for Mobile) -->
-        <button id="toggle-shopping-btn" class="floating-cart-btn mobile-only" aria-label="Open Shopping List"
-            style="display:none;">
-            🛒 <span class="badge" id="floating-cart-badge" style="display: none;">0</span>
-        </button>
-
-        <!-- Overlay -->
         <div id="panel-overlay" class="panel-overlay"></div>
+
+        <button id="toggle-shopping-btn" class="fab" style="display:none;" aria-label="Abrir cesta">
+            🛒<span class="badge-dot" id="floating-cart-badge" style="display:none;">0</span>
+        </button>
     </div>
 
-    <!-- Include data manually since imports block on file:// protocol without a server -->
     <script src="data.js"></script>
     <script src="shopping_data.js"></script>
     <script src="data/sources.js"></script>

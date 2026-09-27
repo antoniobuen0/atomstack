@@ -102,10 +102,16 @@ const LASER_SOURCES = {
         'https://forum.lightburnsoftware.com/t/tumbler-engraving-on-rotary-is-not-holding-proportion/21878', 'community-forum', 'LightBurn forum', { date: '2020-09', note: 'Hardware Ruida: cifras no transferibles al A20.' }),
 
     // --- Guías de makers ---
-    lasertinkererFocus: src('Lasertinkerer — guía de enfoque en láser de diodo', 'Lasertinkerer — diode laser focus guide',
-        'https://lasertinkerer.com/guides/diode-laser-focus/', 'blog', 'lasertinkerer.com', { date: '2026-06-26' }),
-    lasertinkererBirch: src('Lasertinkerer — ajustes para contrachapado de abedul 20 W', 'Lasertinkerer — birch plywood settings, 20 W class',
-        'https://lasertinkerer.com/settings/birch-plywood-cutting/', 'blog', 'lasertinkerer.com', { date: '2026-06-26', machine: 'genérico 20 W', opticalW: 20 }),
+    lasertinkererFocus: src('Lasertinkerer — guía de enfoque (RECHAZADA)', 'Lasertinkerer — focus guide (REJECTED)',
+        'https://lasertinkerer.com/guides/diode-laser-focus/', 'blog', 'lasertinkerer.com', {
+        date: '2026-06-26', confidence: 'low',
+        note: 'RECHAZADA: el propio sitio declara que los modelos mecánicos concretos son "derived estimates". No la usamos como evidencia, solo como explicación conceptual del enfoque.'
+    }),
+    lasertinkererBirch: src('Lasertinkerer — ajustes abedul 20 W (RECHAZADA)', 'Lasertinkerer — birch settings 20 W (REJECTED)',
+        'https://lasertinkerer.com/settings/birch-plywood-cutting/', 'blog', 'lasertinkerer.com', {
+        date: '2026-06-26', confidence: 'low', machine: 'genérico 20 W', opticalW: 20,
+        note: 'RECHAZADA: cifras estimadas por el sitio, no medidas. Eliminado del dataset de presets.'
+    }),
     craftgineerDither: src('Craftgineer — dithering para grabado láser', 'Craftgineer — dithering for laser engraving',
         'https://craftgineer.com/blog/dithering-for-laser-engraving', 'blog', 'craftgineer.com', { date: '2026-07-18' }),
     oneLaserMaterialTest: src('OneLaser — cómo leer una Material Test card', 'OneLaser — reading a LightBurn material test card',
@@ -153,10 +159,71 @@ const LASER_SOURCES = {
         date: '2025-06-19', machine: 'Atomstack A20 Pro V2', opticalW: 20,
         note: 'El único caso que encontré con TU modelo exacto: 100 pasadas al 100 % sin cortar. La causa era un agujero de quemadura en la lente de protección. Si no corta y el preset es razonable, mira la óptica antes que la tabla.'
     }),
-    bonnyCreationsA20: src('Bonny Creations — ajustes por material para el A20 Pro', 'Bonny Creations — per-material settings for the A20 Pro',
+    lbForumChipboard: src('Hilo — grabado láser de chipboard en CO₂ de 60 W', 'Thread — laser engraving chipboard on a 60 W CO2',
+        'https://forum.lightburnsoftware.com/t/laser-engraving-chipboard/98967', 'community-forum', 'LightBurn forum', {
+        date: '2023-04-30', machine: 'Omtech 60/50 W CO₂', opticalW: 60,
+        note: 'No es un diodo: lo listamos solo como referencia de calidad de resultado.'
+    }),
+    bonnyCreationsA20: src('Bonny Creations — ajustes por material (RECHAZADA)', 'Bonny Creations — per-material settings (REJECTED)',
         'https://www.bonnycreations.com/settings/machines/atomstack-a20-pro', 'blog', 'bonnycreations.com', {
-        date: 'sin fecha, consultado 2026-09-27', machine: 'Atomstack A20 Pro 20 W', opticalW: 20, confidence: 'low',
-        note: 'Agregador: cita tablas de AtomStack y hilos no verificables hoy. Algunas velocidades (3000 mm/min a 3 mm en 1 pasada) contradicen a todos los medidores reales. Lo tratamos como optimista.'
+        confidence: 'low', machine: 'sin verificar', opticalW: null,
+        note: 'RECHAZADA como fuente: se contradice a sí misma (pizarra a 2200 mm/min al 90 % en el índice y 4000 mm/min al 55 % en la ficha) y todas sus entradas carecen de foto de resultado. Parece generado, no medido. Sus presets han salido del dataset.'
+    }),
+
+    // --- Seguridad: fuentes primarias (salud ocupacional y láser) ---
+    cdcHcl: src('CDC / ATSDR — ToxFAQs del cloruro de hidrógeno', 'CDC / ATSDR — Hydrogen chloride ToxFAQs',
+        'https://wwwn.cdc.gov/tsp/ToxFAQs/ToxFAQsDetails.aspx?faqid=759&toxid=147', 'standards', 'CDC / ATSDR', { confidence: 'high' }),
+    calPolyProhibited: src('Cal Poly dFab — materiales prohibidos en cortadora láser', 'Cal Poly dFab — prohibited materials for laser cutters',
+        'https://dfab.calpoly.edu/tools/laser-cutter/acceptable-materials', 'standards', 'Cal Poly University', { confidence: 'high' }),
+    nioshSilica: src('CDC / NIOSH — Guide to Health Hazards: sílice cristalina respirable', 'CDC / NIOSH — respirable crystalline silica',
+        'https://www.cdc.gov/niosh/npg/npgd0684.html', 'standards', 'NIOSH', { confidence: 'high' }),
+    wfuLaserManual: src('Manual de seguridad láser de Wake Forest University', 'Wake Forest University laser safety manual',
+        'https://old.physics.wfu.edu/safety/LaserSafetyManual.html', 'standards', 'Wake Forest University', { confidence: 'high' }),
+    laserSafetyIndustries: src('Cómo elegir gafas láser (longitud de onda y OD)', 'How to choose laser safety glasses (wavelength and OD)',
+        'https://help.lasersafetyindustries.com/en/articles/10523763-how-to-choose-laser-safety-glasses', 'standards', 'Laser Safety Industries', { confidence: 'high' }),
+    epilogFire: src('Epilog — reducir riesgos de incendio en corte láser', 'Epilog — reducing fire hazards in laser cutting',
+        'https://support.epiloglaser.com/laser-machine/fusion-pro/usage-and-operation/faq/reducing-fire-hazards-with-your-laser/', 'docs', 'Epilog', { confidence: 'high' }),
+    awsMetalFume: src('AWS — fiebre de humos metálicos (galvanizado)', 'AWS — metal fume fever fact sheet',
+        'https://en.wikipedia.org/wiki/Metal_fume_fever', 'standards', 'AWS / literatura médica', { confidence: 'high' }),
+    lbForumPlastics: src('Hilo — grabado de plásticos y aviso sobre policarbonato', 'Thread — engraving plastic, polycarbonate warning',
+        'https://forum.lightburnsoftware.com/t/engraving-plastic/37604', 'community-forum', 'LightBurn forum', { date: '2021' }),
+    lbForumAbs: src('Hilo — ayuda con ABS (no corta, emite cianuro de hidrógeno)', 'Thread — ABS material help (won\'t cut, HCN)',
+        'https://forum.lightburnsoftware.com/t/abs-material-help/5699', 'community-forum', 'LightBurn forum', { date: '2019-08-08' }),
+    lbForumEyewearA20: src('Hilo — gafas adecuadas para el A20 Pro (OD y 445-460 nm)', 'Thread — proper eyewear for the A20 Pro',
+        'https://forum.lightburnsoftware.com/t/proper-eye-wear-for-use-with-a20-pro/91605', 'community-forum', 'LightBurn forum', { date: '2023', machine: 'Atomstack A20 Pro' }),
+    lbForumMylar: src('Hilo — el mylar/PET deja pasar el 445 nm (absorbe ~16 %)', 'Thread — mylar passes the 445 nm beam (~16% absorbed)',
+        'https://forum.lightburnsoftware.com/t/mylar-and-diode-lasers/37388', 'community-forum', 'LightBurn forum', { date: '2021' }),
+    lbForumPcb: src('Hilo — grabado de PCB y extracción de humos', 'Thread — LightBurn vs PCB etching, extraction',
+        'https://forum.lightburnsoftware.com/t/lightburn-vs-pcb-etching-tips-tricks/179503', 'community-forum', 'LightBurn forum'),
+
+    // --- Presets reales medidos en la red ---
+    lbForumRubber20w: src('Hilo — grabado de goma en xTool D1 Pro de 20 W', 'Thread — engraving rubber on a 20 W xTool D1 Pro',
+        'https://forum.lightburnsoftware.com/t/best-way-to-engrave-rubber-with-a-diode-laser/140268', 'community-forum', 'LightBurn forum', {
+        date: '2024-05-30', machine: 'xTool D1 Pro', opticalW: 20
+    }),
+    lbForumSlate20w: src('Hilo — foto sobre pizarra en Atomstack S20 Pro (20 W)', 'Thread — photo on slate, Atomstack S20 Pro (20 W)',
+        'https://forum.lightburnsoftware.com/t/layering-on-slate-coaster/184744', 'community-forum', 'LightBurn forum', {
+        date: '2025-11-10', machine: 'Atomstack S20 Pro', opticalW: 20,
+        note: 'Misma familia de módulo de 20 W que AtomStack declara para el A20 Pro V2: de lo más transferible que hay en foto sobre piedra.'
+    }),
+    lbForumStainlessFail: src('Hilo — acero inoxidable pulido: 20 W no marca y hay retroreflectancia', 'Thread — polished stainless: 20 W won\'t mark, back-reflection risk',
+        'https://forum.lightburnsoftware.com/t/polished-stainless-steel-engraving/39596', 'community-forum', 'LightBurn forum', {
+        date: '2021-04-25', machine: '"20 W" sin nombre', opticalW: 20,
+        note: 'El mejor dato real que hay sobre metal desnudo en tu potencia: no marca, y pueden rebotar haz y romper el módulo.'
+    }),
+    lbForumA20Aluminium: src('Hilo — ajustes del A20 Pro (aluminio negro y demás)', 'Thread — speed/power settings for the A20 Pro',
+        'https://forum.lightburnsoftware.com/t/need-some-speed-power-settings-for-atomstack-a20-pro/107898', 'community-forum', 'LightBurn forum', {
+        date: '2023-08-22', machine: 'Atomstack A20 Pro', opticalW: 20,
+        note: 'Predecesor directo del tuyo: la coincidencia de máquina más cercana del dataset.'
+    }),
+    lbForumAluCards: src('Hilo — grabado de tarjetas de aluminio anodizado', 'Thread — aluminium business card engraving',
+        'https://forum.lightburnsoftware.com/t/aluminium-business-card-engraving/186789', 'community-forum', 'LightBurn forum', {
+        date: '2026-01-16', machine: 'módulos de 5,5 W y 11 W ópticos', opticalW: 11
+    }),
+    lbForumBandwidth: src('Hilo — pruebas con diodo de 30 W y el techo real de raster', 'Thread — 30 W diode tests and the real raster ceiling',
+        'https://forum.lightburnsoftware.com/t/more-tests-with-the-new-30w-diode-laser/171962', 'community-forum', 'LightBurn forum', {
+        date: '2025-05-17', machine: 'diodo de 30 W', opticalW: 30,
+        note: 'Aporta dos límites que importan: el ancho de banda práctico de raster ronda los 7000 mm/min y el punto útil de un 20 W es ~0,1 mm.'
     })
 };
 
