@@ -9,9 +9,10 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, Pack 10 u., 30x20cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "CNC Barato / Maturas",
@@ -22,9 +23,10 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, Formato A3",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 4.95,
-            free_shipping_min: 50
+            free_shipping_min: 50,
+            check_attempt: "2026-09-27"
         }
     ],
     "Paulownia Wood": [
@@ -37,9 +39,10 @@ const shoppingData = {
             vat_included: true,
             specs: "2mm, Pack 5 u.",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Esteba",
@@ -50,9 +53,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Alistonado paulownia, 2400x1200x13mm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Cork Wood": [
@@ -65,9 +69,10 @@ const shoppingData = {
             vat_included: true,
             specs: "2mm, 5x0.5m",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Laser Project",
@@ -78,9 +83,10 @@ const shoppingData = {
             vat_included: true,
             specs: "300x600mm, corcho optimizado para láser CO2",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Corcho24",
@@ -91,9 +97,10 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, 305x610mm, corcho específico para láser CO2",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Yellow Peach Wood": [
@@ -106,9 +113,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 20 rodajas naturales",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     Bamboo: [
@@ -116,14 +124,15 @@ const shoppingData = {
             provider: "Brildor",
             name: "Tablas de corte de bambú grabables láser",
             url: "https://www.brildor.com/es/tablas-cortar-bambu-grabado",
-            price: 2.15,
-            priceStr: "≈2,15 € / unidad",
+            price: 2.18,
+            priceStr: "2,18 €",
             vat_included: true,
             specs: "Tablas de bambú 10mm, varias medidas, aptas grabado láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "live",
             shipping_cost: null,
-            free_shipping_min: 50
+            free_shipping_min: 50,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "RegaloPubliciad / similar B2B",
@@ -134,9 +143,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Tabla bambú 20,7x14,7cm, personalizable por grabado láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     Acrylic: [
@@ -149,9 +159,10 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, Acrílico colada garantizado láser, 60x40cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 5.95,
-            free_shipping_min: 75
+            free_shipping_min: 75,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Rotulos24",
@@ -162,9 +173,10 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, Colada, Precio por metro cuadrado",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 6,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Ceramic Tile": [
@@ -177,9 +189,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Cerámica estándar para esmaltado láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 15,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Kraft Paper": [
@@ -192,9 +205,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 50 hojas A3, 300 g",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Amazon España",
@@ -205,9 +219,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 50–100 hojas A4, ~300 g/m²",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     "Office Paper": [
@@ -220,9 +235,10 @@ const shoppingData = {
             vat_included: true,
             specs: "500 hojas A4 80 g/m²",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Carrefour Online",
@@ -233,9 +249,10 @@ const shoppingData = {
             vat_included: true,
             specs: "500 hojas A4 80 g/m²",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Oil Painting Paper": [
@@ -248,9 +265,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Bloc 24x33cm 10 hojas",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 4.9,
-            free_shipping_min: 50
+            free_shipping_min: 50,
+            check_attempt: "2026-09-27"
         }
     ],
     Mirrors: [
@@ -263,9 +281,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack de 4, vidrio con reverso apto para láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 4,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     Leather: [
@@ -278,9 +297,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Aprox 1 kg, curtido sin cromo (seguro láser)",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     "Stainless Steel Sheet": [
@@ -293,9 +313,10 @@ const shoppingData = {
             vat_included: true,
             specs: "600x300mm 0.5mm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 5.95,
-            free_shipping_min: 75
+            free_shipping_min: 75,
+            check_attempt: "2026-09-27"
         }
     ],
     "Mirror Stainless Steel": [
@@ -308,9 +329,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Corte y pulido borde láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 6.5,
-            free_shipping_min: 100
+            free_shipping_min: 100,
+            check_attempt: "2026-09-27"
         }
     ],
     "Brushed Stainless Steel": [
@@ -323,9 +345,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Efecto cepillado 30x20",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 4.9,
-            free_shipping_min: 60
+            free_shipping_min: 60,
+            check_attempt: "2026-09-27"
         }
     ],
     Pine: [
@@ -338,9 +361,10 @@ const shoppingData = {
             vat_included: true,
             specs: "18mm x 80x40cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 15,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     Ceramics: [
@@ -353,9 +377,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Set 4 piezas",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     Alumina: [
@@ -368,9 +393,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 50 tarjetas visita",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 5.95,
-            free_shipping_min: 75
+            free_shipping_min: 75,
+            check_attempt: "2026-09-27"
         }
     ],
     Glass: [
@@ -383,9 +409,10 @@ const shoppingData = {
             vat_included: true,
             specs: "30x20cm, 5 piezas",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     Denim: [
@@ -398,9 +425,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Ideal grabado láser desgastado",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 4.5,
-            free_shipping_min: 50
+            free_shipping_min: 50,
+            check_attempt: "2026-09-27"
         }
     ],
     Plastic: [
@@ -413,9 +441,10 @@ const shoppingData = {
             vat_included: true,
             specs: "1.5mm, 60x30cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 4.9,
-            free_shipping_min: 60
+            free_shipping_min: 60,
+            check_attempt: "2026-09-27"
         }
     ],
     Carton: [
@@ -428,9 +457,10 @@ const shoppingData = {
             vat_included: true,
             specs: "100x120cm, paquete 20",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 8,
-            free_shipping_min: 200
+            free_shipping_min: 200,
+            check_attempt: "2026-09-27"
         }
     ],
     MDF: [
@@ -443,9 +473,10 @@ const shoppingData = {
             vat_included: true,
             specs: "3mm, 60x120cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Amazon España",
@@ -456,9 +487,10 @@ const shoppingData = {
             vat_included: true,
             specs: "A4, pack 10, compatible corte láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Laser Project",
@@ -469,9 +501,10 @@ const shoppingData = {
             vat_included: true,
             specs: "DM/DM rechapado en varios formatos, optimizado para láser",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Galvanized Iron": [
@@ -484,9 +517,10 @@ const shoppingData = {
             vat_included: true,
             specs: "0.5mm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 5.9,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     Rock: [
@@ -499,9 +533,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Pack 20 piedras de río, 5-8cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     "Crystal Stone": [
@@ -514,9 +549,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Slices pulidos 4-6cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 4,
-            free_shipping_min: 50
+            free_shipping_min: 50,
+            check_attempt: "2026-09-27"
         }
     ],
     Mahogany: [
@@ -529,9 +565,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Espesor 10-20mm personalizados",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 12,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "PCB Board": [
@@ -544,9 +581,10 @@ const shoppingData = {
             vat_included: true,
             specs: "100x160mm, 1 o 2 caras",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Amazon España",
@@ -557,9 +595,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Varios tamaños, FR4 cobreado",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     "High Density Foam Board": [
@@ -572,9 +611,10 @@ const shoppingData = {
             vat_included: true,
             specs: "5mm, pack 10 hojas A3",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "SelfPaper",
@@ -585,9 +625,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Planchas varias medidas, 5mm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Two Color Plate": [
@@ -600,9 +641,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Oro/Negro, Plata/Negro 1.5mm, 60x40cm",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: 5.95,
-            free_shipping_min: 75
+            free_shipping_min: 75,
+            check_attempt: "2026-09-27"
         }
     ],
     Resin: [
@@ -615,9 +657,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Kit ~1kg para encapsulados y piezas macizas",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: 100
+            free_shipping_min: 100,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Amazon España",
@@ -628,9 +671,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Kits 1kg para coladas, varias marcas",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     "Artificial Beef Bone": [
@@ -643,9 +687,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Piezas pequeñas cortables/grabables",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     Rubber: [
@@ -658,9 +703,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Hoja tamaño A4, 2.3mm espesor",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         },
         {
             provider: "Brildor",
@@ -671,9 +717,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Hojas para grabado láser, varios formatos",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "stale",
             shipping_cost: null,
-            free_shipping_min: 50
+            free_shipping_min: 50,
+            check_attempt: "2026-09-27"
         }
     ],
     "Iron Sheet": [
@@ -686,9 +733,10 @@ const shoppingData = {
             vat_included: true,
             specs: "1000x500mm, 1mm espesor",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 6.9,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ],
     "Artificial Agate": [
@@ -701,9 +749,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Para posavasos grabados",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 0,
-            free_shipping_min: 29
+            free_shipping_min: 29,
+            check_attempt: "2026-09-27"
         }
     ],
     Cobblestone: [
@@ -716,9 +765,10 @@ const shoppingData = {
             vat_included: true,
             specs: "Saco 20Kg, para grabado conector continuo",
             query_date: "2026-09-27",
-            price_state: "unverified",
+            price_state: "blocked",
             shipping_cost: 15,
-            free_shipping_min: null
+            free_shipping_min: null,
+            check_attempt: "2026-09-27"
         }
     ]
 };
