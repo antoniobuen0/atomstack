@@ -12,7 +12,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
@@ -27,7 +27,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 4.95,
             free_shipping_min: 50,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -44,7 +44,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
@@ -55,11 +55,11 @@ const shoppingData = {
             priceStr: "70,02 €",
             vat_included: true,
             specs: "Alistonado paulownia, 2400x1200x13mm",
-            query_date: "2026-10-04",
+            query_date: "2026-10-05",
             price_state: "live",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             price_source: "reader"
         }
     ],
@@ -76,7 +76,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Laser Project",
@@ -90,7 +90,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Corcho24",
@@ -104,7 +104,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Yellow Peach Wood": [
@@ -120,7 +120,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -133,11 +133,11 @@ const shoppingData = {
             priceStr: "2,18 €",
             vat_included: true,
             specs: "Tablas de bambú 10mm, varias medidas, aptas grabado láser",
-            query_date: "2026-10-04",
+            query_date: "2026-10-05",
             price_state: "live",
             shipping_cost: null,
             free_shipping_min: 50,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             price_source: "jsonld"
         },
         {
@@ -148,12 +148,12 @@ const shoppingData = {
             priceStr: "2,30 €",
             vat_included: true,
             specs: "Tabla bambú 20,7x14,7cm, personalizable por grabado láser",
-            query_date: "2026-10-04",
+            query_date: "2026-10-05",
             price_state: "live",
             price_note: "Bajaba de 15,00 € a 2,30 €. Puede ser precio B2B por unidad de esta tabla de 20,7×14,7 cm, o el precio de otra variante de la página. Comprobar en la tienda.",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             price_source: "jsonld"
         }
     ],
@@ -170,21 +170,21 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 5.95,
             free_shipping_min: 75,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Rotulos24",
             name: "Metacrilato a medida 3mm Negro OPACO Cast",
             url: "https://www.rotulos24.com/placas-metacrilato-a-medida",
-            price: 35,
+            price: 35.0,
             priceStr: "35,00 €",
             vat_included: true,
             specs: "3mm, Colada, Precio por metro cuadrado",
-            query_date: "2026-10-03",
-            price_state: "stale",
+            query_date: "2026-10-05",
+            price_state: "live",
             shipping_cost: 6,
             free_shipping_min: null,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             price_source: "reader"
         }
     ],
@@ -201,7 +201,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: 15,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Kraft Paper": [
@@ -217,7 +217,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Amazon España",
@@ -231,7 +231,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -248,7 +248,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
@@ -263,7 +263,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -280,7 +280,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 4.9,
             free_shipping_min: 50,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Mirrors: [
@@ -296,7 +296,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: 4,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Leather: [
@@ -312,7 +312,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -329,7 +329,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 5.95,
             free_shipping_min: 75,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Mirror Stainless Steel": [
@@ -345,7 +345,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 6.5,
             free_shipping_min: 100,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Brushed Stainless Steel": [
@@ -361,7 +361,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 4.9,
             free_shipping_min: 60,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Pine: [
@@ -377,7 +377,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: 15,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Ceramics: [
@@ -393,7 +393,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -410,7 +410,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 5.95,
             free_shipping_min: 75,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Glass: [
@@ -426,7 +426,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -443,7 +443,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 4.5,
             free_shipping_min: 50,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Plastic: [
@@ -459,7 +459,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 4.9,
             free_shipping_min: 60,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Carton: [
@@ -472,10 +472,10 @@ const shoppingData = {
             vat_included: true,
             specs: "100x120cm, paquete 20",
             query_date: "2026-10-04",
-            price_state: "live",
+            price_state: "stale",
             shipping_cost: 8,
             free_shipping_min: 200,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             price_source: "reader"
         }
     ],
@@ -492,7 +492,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Amazon España",
@@ -506,7 +506,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
@@ -517,11 +517,11 @@ const shoppingData = {
             priceStr: "16,18 €",
             vat_included: true,
             specs: "DM/DM rechapado en varios formatos, optimizado para láser",
-            query_date: "2026-10-04",
+            query_date: "2026-10-05",
             price_state: "live",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             price_source: "reader"
         }
     ],
@@ -538,7 +538,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: 5.9,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Rock: [
@@ -554,7 +554,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -571,7 +571,7 @@ const shoppingData = {
             price_state: "dead",
             shipping_cost: 4,
             free_shipping_min: 50,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Mahogany: [
@@ -587,7 +587,7 @@ const shoppingData = {
             price_state: "dead",
             shipping_cost: 12,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "PCB Board": [
@@ -603,7 +603,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Amazon España",
@@ -617,7 +617,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -634,7 +634,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         },
         {
@@ -649,7 +649,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Two Color Plate": [
@@ -665,7 +665,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: 5.95,
             free_shipping_min: 75,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     Resin: [
@@ -681,7 +681,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: 100,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Amazon España",
@@ -695,7 +695,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -712,7 +712,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -729,7 +729,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         },
         {
             provider: "Brildor",
@@ -743,7 +743,7 @@ const shoppingData = {
             price_state: "stale",
             shipping_cost: null,
             free_shipping_min: 50,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Iron Sheet": [
@@ -759,7 +759,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: 6.9,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ],
     "Artificial Agate": [
@@ -775,7 +775,7 @@ const shoppingData = {
             price_state: "search",
             shipping_cost: 0,
             free_shipping_min: 29,
-            check_attempt: "2026-10-04",
+            check_attempt: "2026-10-05",
             search_note: "La URL apunta a resultados, no a una ficha: el precio es orientativo."
         }
     ],
@@ -792,7 +792,7 @@ const shoppingData = {
             price_state: "blocked",
             shipping_cost: 15,
             free_shipping_min: null,
-            check_attempt: "2026-10-04"
+            check_attempt: "2026-10-05"
         }
     ]
 };
